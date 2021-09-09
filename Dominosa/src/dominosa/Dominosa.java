@@ -5,10 +5,7 @@
  */
 package dominosa;
 
-//import java.awt.Point;
-
 import java.util.ArrayList;
-
 
 /**
  *
@@ -20,19 +17,14 @@ public class Dominosa {
 
     public Dominosa() {
     }
-
     /**
      * @param args the command line arguments
      */
-    
+
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
     public static Point puntito = new Point(-1,-1);
-    
-   
-    
     //Me duele la cabeza a little too much, por ahora dejo medio escrita mi idea, pero hay varias cosas que debo chequear. xd
-    
-    
+
    /* 
     public static void generateDominoes(int n){
         for (int i = 0; i < n; i++){
@@ -115,7 +107,6 @@ public class Dominosa {
         
         //ESQUINA SUPERIOR DERECHA-------------------------------------
         //HORIZONTAL
-        
         if (!agregarFicha (0,matrix[0].length-2, 0,matrix[0].length-1,contadorDominoes,matrix)){
             //VERTICAL
             agregarFicha (0,matrix[0].length -1, 1,matrix[0].length -1,contadorDominoes,matrix);
