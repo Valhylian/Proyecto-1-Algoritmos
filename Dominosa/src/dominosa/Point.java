@@ -19,6 +19,11 @@ public class Point {
         this.x = x;
         this.y = y;
     }
+    
+    public Point(Point ubicacion1, Point ubicacion2) {
+        this.ubicacion1 = ubicacion1;
+        this.ubicacion2 = ubicacion2;
+    }
     public Point(int x, int y, Point ubicacion1, Point ubicacion2) {
         this.x = x;
         this.y = y;
