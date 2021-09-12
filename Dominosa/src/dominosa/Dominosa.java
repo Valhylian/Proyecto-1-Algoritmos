@@ -29,6 +29,43 @@ public class Dominosa {
     public static ArrayList<String> noSoluciones = new ArrayList<String>(); //Substrings de soluciones incorrectas
     public static int matrixAux[][];
    
+  
+    //GENERA MATRIZ X*Y/////////////////////////////////////
+    public int[][] generarmatriz (int filas, int columnas){
+        int matriz[][] = new int[filas][columnas];
+        for (int x=0; x < matriz.length; x++) {
+            for (int y=0; y < matriz[x].length; y++) {
+            matriz[x][y]=8;
+            }
+        }
+        return matriz;
+    }
+     
+    public void actualiceMatrizAux (String orientacion){
+        Point point = retornaSiguientePoint();
+            int x = point.x;
+            int y = point.y;
+            
+        if (orientacion.equals("Vertical")){
+            matrixAux[x][y] = 1;
+            matrixAux[x+1][y] = 1;
+        }
+        else{
+            matrixAux[x][y] = 0;
+            matrixAux[x][y+1] = 0;
+        }
+    }
+    
+    //IMPRIME MATRIZ ///////////////////////////////////////
+    public void imprimirMatriz (int matrix[][]){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+
     public void imprimirDominoes (){
         for (int i=0;i<dominoes.size();i++){
             Point punto = dominoes.get(i);
@@ -44,32 +81,11 @@ public class Dominosa {
             System.out.println("\n");
         }
     }
- 
-        //GENERA MATRIZ X*Y/////////////////////////////////////
-    public int[][] generarmatriz (int filas, int columnas){
-        int matriz[][] = new int[filas][columnas];
-        for (int x=0; x < matriz.length; x++) {
-            for (int y=0; y < matriz[x].length; y++) {
-            matriz[x][y]=8;
-            }
-        }
-        return matriz;
-    }
-    //IMPRIME MATRIZ ///////////////////////////////////////
-    public void imprimirMatriz (int matrix[][]){
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                System.out.print(matrix[i][j] + " ");
-            }
-            System.out.println();
-        }
-    }
     
     //Retorna en un punto la siguiente posicion libre en la matrizAux
     // x = coordenada x
     // y = coordenada y
     // null si no hay libres
-    
     public Point retornaSiguientePoint(){
         Point point = null;
         for (int x=0; x < matrixAux.length; x++) {
@@ -82,8 +98,10 @@ public class Dominosa {
         }
         return point;
     }
+
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
     
-    public boolean esHorizontal (){
+    public boolean esHorizontalFuerzaBruta(){
         Point point = retornaSiguientePoint();
         if (point == null){
             return false;
@@ -106,7 +124,7 @@ public class Dominosa {
         return true;
     }
     
-    public boolean esVertical (){
+    public boolean esVerticalFuerzaBruta (){
         Point point = retornaSiguientePoint();
         if (point == null){
             return false;
@@ -127,29 +145,14 @@ public class Dominosa {
         }
         return true;
     }
-    
-    public void actualiceMatrizAux (String orientacion){
-        Point point = retornaSiguientePoint();
-            int x = point.x;
-            int y = point.y;
-            
-        if (orientacion.equals("Vertical")){
-            matrixAux[x][y] = 1;
-            matrixAux[x+1][y] = 1;
-        }
-        else{
-            matrixAux[x][y] = 0;
-            matrixAux[x][y+1] = 0;
-        }
-    }
-    
-    public boolean esSolucion (String solucion, int matrix[][]){
+   
+    public boolean esSolucionFuerzaBruta (String solucion, int matrix[][]){
         String posicion = "0";  //se inicaliza en 0 solo por declararlo
         for (int i=0; i<solucion.length();i++){
             posicion = Character.toString(solucion.charAt(i));
             if (posicion.equals("0")){
                 //verificar si la ficha puede ser horizontal
-                if (!esHorizontal ()){
+                if (!esHorizontalFuerzaBruta()){
                     return false;
                 }
                 else{
@@ -158,7 +161,7 @@ public class Dominosa {
             }
             else{
                 //verificar si la ficha puede ser vertical
-                 if (!esVertical ()){
+                 if (!esVerticalFuerzaBruta()){
                     return false;
                 }
                  else{
@@ -175,10 +178,9 @@ public class Dominosa {
         
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
-        
+        int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
-       
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
         
         //3-Ciclo para recorrer combinaciones
@@ -188,18 +190,35 @@ public class Dominosa {
             //1-Obtener posible combinacion i
             String posibleSolucion = combinaciones.get(i);
             //2- llama a esSolucion
-            if (esSolucion(posibleSolucion,matrix)){
+            if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
                 //agregar solucion a algun arreglo
                 soluciones.add(posibleSolucion);
                 
+            }else{
+                cantidadFallos+=1;
             }
         }
+        System.out.println("Cantidad de fallas: "+cantidadFallos);
         return soluciones;
     }
 
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-    public boolean esHorizontalBacktracking (String solucion){
+    public boolean verificadorSoluciones(String solucion){
+        int contadorLetras=0;
+        for(int i=0; i<noSoluciones.size(); i++){
+            contadorLetras=noSoluciones.get(i).length(); 
+            //System.out.println("S: "+solucion);
+            //System.out.println("SS "+solucion.substring(0,contadorLetras));
+            //System.out.println("NS "+noSoluciones.get(i));
+            if(solucion.substring(0,contadorLetras).equals(noSoluciones.get(i))){
+                return false;      
+            }
+        }
+        return true;
+    }
+   
+    public boolean esHorizontalBacktracking (){
         Point point = retornaSiguientePoint();
         if (point == null){
             return false;
@@ -222,7 +241,7 @@ public class Dominosa {
         return true;
     }
 
-    public boolean esVerticalBacktracking  (String solucion){
+    public boolean esVerticalBacktracking  (){
         Point point = retornaSiguientePoint();
         if (point == null){
             return false;
@@ -244,39 +263,39 @@ public class Dominosa {
         return true;
     }
 
-    
-
     public boolean esSolucionBacktracking (String solucion, int matrix[][]){
-        String posicion = "";  
+        String posicion="";  
+        String posicionesProceso="";
         for (int i=0; i<solucion.length();i++){
             posicion = Character.toString(solucion.charAt(i));
-            String posicionesProceso="";
-            posicionesProceso.concat(posicion);
-
-            if (posicion.equals("0")){
-                if(){
-                    //verificar si la ficha puede ser horizontal
-                    if (!esHorizontalBacktracking (solucion)){
+            posicionesProceso=posicionesProceso+posicion;
+            //System.out.println(posicionesProceso);
+            if(verificadorSoluciones(solucion)){
+                if (posicion.equals("0")){
+                        //verificar si la ficha puede ser horizontal
+                        if (!esHorizontalBacktracking ()){
+                            noSoluciones.add(posicionesProceso);
+                            return false;
+                        }
+                        else{
+                            actualiceMatrizAux ("Horizontal");
+                        }
+                    }
+                else{
+                    //verificar si la ficha puede ser vertical
+                    if (!esVerticalBacktracking ()){
                         noSoluciones.add(posicionesProceso);
                         return false;
                     }
                     else{
-                        actualiceMatrizAux ("Horizontal");
+                        actualiceMatrizAux ("Vertical");
                     }
                 }
-            }
-            else{
-                //verificar si la ficha puede ser vertical
-                if (!esVerticalBacktracking (solucion)){
-                    noSoluciones.add(posicionesProceso);
-                    return false;
-                }
-                else{
-                    actualiceMatrizAux ("Vertical");
-                }
+            }else{
+                return false;
             }
         }
-        System.out.println(solucion);
+        //System.out.println(solucion);
         System.out.println("Solution = True");
         return true;
     }
@@ -284,10 +303,9 @@ public class Dominosa {
     public ArrayList<String> BacktrackingPrueba(int matrix[][]){
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
-        
+        int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
-    
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
         
         //3-Ciclo para recorrer combinaciones
@@ -300,8 +318,12 @@ public class Dominosa {
             if (esSolucionBacktracking(posibleSolucion,matrix)){
                 //agregar solucion a algun arreglo
                 soluciones.add(posibleSolucion);    
+            }else{
+                cantidadFallos+=1;
             }
         }
+        System.out.println("Cantidad de fallas: "+cantidadFallos);
+        System.out.println(noSoluciones);
         return soluciones;
     }
 }
