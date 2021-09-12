@@ -99,9 +99,7 @@ public class Dominosa {
         return point;
     }
 
- //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
-    
-    public boolean esHorizontalFuerzaBruta(){
+    public boolean esHorizontal(){
         Point point = retornaSiguientePoint();
         if (point == null){
             return false;
@@ -124,7 +122,7 @@ public class Dominosa {
         return true;
     }
     
-    public boolean esVerticalFuerzaBruta (){
+    public boolean esVertical(){
         Point point = retornaSiguientePoint();
         if (point == null){
             return false;
@@ -145,14 +143,16 @@ public class Dominosa {
         }
         return true;
     }
-   
+
+ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
+     
     public boolean esSolucionFuerzaBruta (String solucion, int matrix[][]){
         String posicion = "0";  //se inicaliza en 0 solo por declararlo
         for (int i=0; i<solucion.length();i++){
             posicion = Character.toString(solucion.charAt(i));
             if (posicion.equals("0")){
                 //verificar si la ficha puede ser horizontal
-                if (!esHorizontalFuerzaBruta()){
+                if (!esHorizontal()){
                     return false;
                 }
                 else{
@@ -161,7 +161,7 @@ public class Dominosa {
             }
             else{
                 //verificar si la ficha puede ser vertical
-                 if (!esVerticalFuerzaBruta()){
+                 if (!esVertical()){
                     return false;
                 }
                  else{
@@ -170,7 +170,7 @@ public class Dominosa {
             }
         }
         System.out.println(solucion);
-        System.out.println("Solucion = true");
+        System.out.println("Solucion = True");
         return true;
     }
     
@@ -218,51 +218,6 @@ public class Dominosa {
         return true;
     }
    
-    public boolean esHorizontalBacktracking (){
-        Point point = retornaSiguientePoint();
-        if (point == null){
-            return false;
-        }
-        int x = point.x;
-        int y = point.y;
-        System.out.println("Horizontal");
-        System.out.println("x = "+x );
-        System.out.println("y = "+y );
-        //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
-        if (y+1 >= matrixAux[0].length){
-            System.out.println("Solution = False");
-            return false;
-        }
-        if (matrixAux[x][y+1] != 8){
-            System.out.println("Solution = False");
-            return false;
-        }
-        
-        return true;
-    }
-
-    public boolean esVerticalBacktracking  (){
-        Point point = retornaSiguientePoint();
-        if (point == null){
-            return false;
-        }
-        int x = point.x;
-        int y = point.y;
-        System.out.println("Vertical");
-        System.out.println("x = "+x );
-        System.out.println("y = "+y );
-        //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
-        if (x+1 >= matrixAux.length){
-            System.out.println("Solution = False");
-            return false;
-        }
-        if (matrixAux[x+1][y] != 8){
-            System.out.println("Solution = False");
-            return false;
-        }
-        return true;
-    }
-
     public boolean esSolucionBacktracking (String solucion, int matrix[][]){
         String posicion="";  
         String posicionesProceso="";
@@ -273,7 +228,7 @@ public class Dominosa {
             if(verificadorSoluciones(solucion)){
                 if (posicion.equals("0")){
                         //verificar si la ficha puede ser horizontal
-                        if (!esHorizontalBacktracking ()){
+                        if (!esHorizontal()){
                             noSoluciones.add(posicionesProceso);
                             return false;
                         }
@@ -283,7 +238,7 @@ public class Dominosa {
                     }
                 else{
                     //verificar si la ficha puede ser vertical
-                    if (!esVerticalBacktracking ()){
+                    if (!esVertical()){
                         noSoluciones.add(posicionesProceso);
                         return false;
                     }
