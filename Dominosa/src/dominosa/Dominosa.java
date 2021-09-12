@@ -7,6 +7,10 @@ package dominosa;
 
 import java.util.ArrayList;
 
+import javax.sound.midi.Soundbank;
+
+import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
+
 /**
  *
  * @author monic
@@ -22,6 +26,7 @@ public class Dominosa {
      */
 
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
+    public static ArrayList<String> noSoluciones = new ArrayList<String>(); //Substrings de soluciones incorrectas
     public static int matrixAux[][];
    
     public void imprimirDominoes (){
@@ -166,12 +171,8 @@ public class Dominosa {
         return true;
     }
     
-
-    
-    
     public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
         
-
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         
@@ -191,6 +192,114 @@ public class Dominosa {
                 //agregar solucion a algun arreglo
                 soluciones.add(posibleSolucion);
                 
+            }
+        }
+        return soluciones;
+    }
+
+//~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+    public boolean esHorizontalBacktracking (String solucion){
+        Point point = retornaSiguientePoint();
+        if (point == null){
+            return false;
+        }
+        int x = point.x;
+        int y = point.y;
+        System.out.println("Horizontal");
+        System.out.println("x = "+x );
+        System.out.println("y = "+y );
+        //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
+        if (y+1 >= matrixAux[0].length){
+            System.out.println("Solution = False");
+            return false;
+        }
+        if (matrixAux[x][y+1] != 8){
+            System.out.println("Solution = False");
+            return false;
+        }
+        
+        return true;
+    }
+
+    public boolean esVerticalBacktracking  (String solucion){
+        Point point = retornaSiguientePoint();
+        if (point == null){
+            return false;
+        }
+        int x = point.x;
+        int y = point.y;
+        System.out.println("Vertical");
+        System.out.println("x = "+x );
+        System.out.println("y = "+y );
+        //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
+        if (x+1 >= matrixAux.length){
+            System.out.println("Solution = False");
+            return false;
+        }
+        if (matrixAux[x+1][y] != 8){
+            System.out.println("Solution = False");
+            return false;
+        }
+        return true;
+    }
+
+    
+
+    public boolean esSolucionBacktracking (String solucion, int matrix[][]){
+        String posicion = "";  
+        for (int i=0; i<solucion.length();i++){
+            posicion = Character.toString(solucion.charAt(i));
+            String posicionesProceso="";
+            posicionesProceso.concat(posicion);
+
+            if (posicion.equals("0")){
+                if(){
+                    //verificar si la ficha puede ser horizontal
+                    if (!esHorizontalBacktracking (solucion)){
+                        noSoluciones.add(posicionesProceso);
+                        return false;
+                    }
+                    else{
+                        actualiceMatrizAux ("Horizontal");
+                    }
+                }
+            }
+            else{
+                //verificar si la ficha puede ser vertical
+                if (!esVerticalBacktracking (solucion)){
+                    noSoluciones.add(posicionesProceso);
+                    return false;
+                }
+                else{
+                    actualiceMatrizAux ("Vertical");
+                }
+            }
+        }
+        System.out.println(solucion);
+        System.out.println("Solution = True");
+        return true;
+    }
+
+    public ArrayList<String> BacktrackingPrueba(int matrix[][]){
+        //1-Calcular la cantidad de fichas
+        int cantFichas = (matrix.length * matrix[0].length)/2;
+        
+        //2-Generar lista de posibles soluciones
+        ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
+    
+        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
+        
+        //3-Ciclo para recorrer combinaciones
+        for (int i=0; i<combinaciones.size(); i++){
+            //*-Generar matriz gemela de "8"
+            matrixAux = generarmatriz (matrix.length, matrix[0].length);
+            //1-Obtener posible combinacion i
+            String posibleSolucion = combinaciones.get(i);
+            //2- llama a esSolucion
+            if (esSolucionBacktracking(posibleSolucion,matrix)){
+                //agregar solucion a algun arreglo
+                soluciones.add(posibleSolucion);    
             }
         }
         return soluciones;
