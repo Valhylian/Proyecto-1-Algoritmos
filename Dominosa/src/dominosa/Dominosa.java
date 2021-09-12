@@ -22,7 +22,6 @@ public class Dominosa {
      */
 
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
-    public static Point puntito = new Point(-1,-1);
     public static int matrixAux[][];
    
     public void imprimirDominoes (){
@@ -60,21 +59,8 @@ public class Dominosa {
             System.out.println();
         }
     }
-    /*
-    public Point verificarOrientacion (String orientacion){
-        if (orientacion.equals("Vertical")){
-            
-        }
-        else if (orientacion.equals("Horizontal")){
-            
-        }
-        else{
-            return null;
-        }
-        
-    }*/
     
-    //Retorna en un punto la siguinete posicion libre en la matrizAux
+    //Retorna en un punto la siguiente posicion libre en la matrizAux
     // x = coordenada x
     // y = coordenada y
     // null si no hay libres
