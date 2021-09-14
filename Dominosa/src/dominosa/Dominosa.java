@@ -7,9 +7,7 @@ package dominosa;
 
 import java.util.ArrayList;
 
-import javax.sound.midi.Soundbank;
 
-import jdk.javadoc.internal.doclets.formats.html.SourceToHTMLConverter;
 
 /**
  *
@@ -225,11 +223,13 @@ public class Dominosa {
             posicion = Character.toString(solucion.charAt(i));
             posicionesProceso=posicionesProceso+posicion;
             //System.out.println(posicionesProceso);
-            if(verificadorSoluciones(solucion)){
+            if(verificadorSoluciones(solucion)) {
                 if (posicion.equals("0")){
                         //verificar si la ficha puede ser horizontal
                         if (!esHorizontal()){
-                            noSoluciones.add(posicionesProceso);
+                            if(posicionesProceso.length()<solucion.length()){
+                                noSoluciones.add(posicionesProceso);
+                            }
                             return false;
                         }
                         else{
@@ -239,7 +239,9 @@ public class Dominosa {
                 else{
                     //verificar si la ficha puede ser vertical
                     if (!esVertical()){
-                        noSoluciones.add(posicionesProceso);
+                        if(posicionesProceso.length()<solucion.length()){
+                            noSoluciones.add(posicionesProceso);
+                        }
                         return false;
                     }
                     else{
