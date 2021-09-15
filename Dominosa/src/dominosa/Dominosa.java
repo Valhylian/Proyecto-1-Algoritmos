@@ -104,16 +104,16 @@ public class Dominosa {
         }
         int x = point.x;
         int y = point.y;
-        System.out.println("Horizontal");
-        System.out.println("x = "+x );
-        System.out.println("y = "+y );
+        //System.out.println("Horizontal");
+        //System.out.println("x = "+x );
+        //System.out.println("y = "+y );
         //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
         if (y+1 >= matrixAux[0].length){
-            System.out.println("Falso por que se pasa");
+            //System.out.println("Falso por que se pasa");
             return false;
         }
         if (matrixAux[x][y+1] != 8){
-            System.out.println("Falso porque esta ocupado");
+            //System.out.println("Falso porque esta ocupado");
             return false;
         }
         
@@ -127,16 +127,16 @@ public class Dominosa {
         }
         int x = point.x;
         int y = point.y;
-        System.out.println("Vertical");
-        System.out.println("x = "+x );
-        System.out.println("y = "+y );
+        //System.out.println("Vertical");
+        //System.out.println("x = "+x );
+        //System.out.println("y = "+y );
         //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
         if (x+1 >= matrixAux.length){
-            System.out.println("Falso");
+            //System.out.println("Falso");
             return false;
         }
         if (matrixAux[x+1][y] != 8){
-            System.out.println("Falso");
+            //System.out.println("Falso");
             return false;
         }
         return true;
@@ -146,17 +146,15 @@ public class Dominosa {
     //RETORNA TRUE SI ESTA
     public boolean comprobarExistencia (Point ficha){
         Point reverso = new Point (ficha.y, ficha.x);
-        System.out.println("ficha x = "+ficha.x);
-        System.out.println("ficha y = "+ficha.y);
+        //System.out.println("ficha x = "+ficha.x);
+        //System.out.println("ficha y = "+ficha.y);
 
         for (int i = 0; i < dominoes.size(); i++){
             //revisa el contenido total de la ficha
             if ((dominoes.get(i).x == ficha.x && dominoes.get(i).y == ficha.y)  || (dominoes.get(i).x == reverso.x && dominoes.get(i).y == reverso.y)){
-                System.out.println("esta");
                 return true;
             }
         }
-        System.out.println("no esta");
         return false;
     }
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
@@ -223,13 +221,13 @@ public class Dominosa {
         
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
-            System.out.println("INICIA LA OTRA SOLUCION");
+            //System.out.println("INICIA LA OTRA SOLUCION");
             dominoes = new ArrayList<Point>();
             //*-Generar matriz gemela de "8"
             matrixAux = generarmatriz (matrix.length, matrix[0].length);
             //1-Obtener posible combinacion i
             String posibleSolucion = combinaciones.get(i);
-            System.out.println(posibleSolucion);
+            //System.out.println(posibleSolucion);
             //2- llama a esSolucion
             if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
                 //agregar solucion a soluciones
@@ -253,6 +251,10 @@ public class Dominosa {
             //System.out.println("SS "+solucion.substring(0,contadorLetras));
             //System.out.println("NS "+noSoluciones.get(i));
             if(solucion.substring(0,contadorLetras).equals(noSoluciones.get(i))){
+                //System.out.println("Verificador retorna false");
+                //System.out.println("S: "+solucion);
+                //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                //System.out.println("NS "+noSoluciones.get(i));
                 return false;      
             }
         }
@@ -281,7 +283,7 @@ public class Dominosa {
                           Point puntoReferencia = retornaSiguientePoint();
                           Point ficha = new Point (matrix[puntoReferencia.x][puntoReferencia.y],matrix[puntoReferencia.x][puntoReferencia.y+1]);
                           if (!comprobarExistencia(ficha)){
-                              System.out.println("Agrega la ficha horizontal");
+                              //System.out.println("Agrega la ficha horizontal");
                               dominoes.add(ficha);//agrega la ficha a dominoes para validar contenido
                               actualiceMatrizAux ("Horizontal");
                           }
@@ -319,7 +321,7 @@ public class Dominosa {
             }
         }
         //System.out.println(solucion);
-        System.out.println("Solution = True");
+        //System.out.println("Solution = True");
         return true;
     }
 
