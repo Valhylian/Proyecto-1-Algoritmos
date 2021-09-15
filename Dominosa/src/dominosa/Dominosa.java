@@ -203,7 +203,7 @@ public class Dominosa {
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public boolean verificadorSoluciones(String solucion){
-        int contadorLetras=0;
+        int contadorLetras=0; 
         for(int i=0; i<noSoluciones.size(); i++){
             contadorLetras=noSoluciones.get(i).length(); 
             //System.out.println("S: "+solucion);
