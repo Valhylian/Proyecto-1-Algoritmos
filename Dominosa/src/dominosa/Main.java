@@ -17,7 +17,7 @@ public class Main {
          Dominosa juego = new Dominosa();
          System.out.println(juego.fuerzaBrutaPrueba(matrix));
          System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
-         System.out.println(juego.BacktrackingPrueba(matrix));
+         //System.out.println(juego.BacktrackingPrueba(matrix));
          //juego.imprimirMatriz(juego.generarmatriz(3,3));
          
     }
