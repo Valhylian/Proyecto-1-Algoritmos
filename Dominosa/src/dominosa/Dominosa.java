@@ -26,6 +26,7 @@ public class Dominosa {
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
     public static ArrayList<String> noSoluciones = new ArrayList<String>(); //Substrings de soluciones incorrectas
     public static int matrixAux[][];
+    public static ArrayList<int[][]> solucionesMatrices = new ArrayList<int[][]>();
    
   
     //GENERA MATRIZ X*Y/////////////////////////////////////
@@ -174,7 +175,7 @@ public class Dominosa {
                   Point puntoReferencia = retornaSiguientePoint();
                   Point ficha = new Point (matrix[puntoReferencia.x][puntoReferencia.y],matrix[puntoReferencia.x][puntoReferencia.y+1]);
                   if (!comprobarExistencia(ficha)){
-                      System.out.println("Agrega la ficha horizontal");
+                      //System.out.println("Agrega la ficha horizontal");
                       dominoes.add(ficha);//agrega la ficha a dominoes para validar contenido
                       actualiceMatrizAux ("Horizontal");
                   }
@@ -212,12 +213,14 @@ public class Dominosa {
     }
     
     public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
+         
         
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
@@ -232,6 +235,7 @@ public class Dominosa {
             if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
                 //agregar solucion a soluciones
                 soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
                 
             }else{
                 cantidadFallos+=1;
@@ -241,6 +245,11 @@ public class Dominosa {
         return soluciones;
     }
 
+    public void imprimirMatricesSoluciones(){
+        for (int i=0; i<solucionesMatrices.size();i++){
+            imprimirMatriz(solucionesMatrices.get(i));
+        }
+    }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public boolean verificadorSoluciones(String solucion){
