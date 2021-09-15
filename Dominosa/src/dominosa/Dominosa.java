@@ -214,7 +214,6 @@ public class Dominosa {
     }
     
     public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
-        
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         int cantidadFallos=0;
@@ -276,10 +275,22 @@ public class Dominosa {
                             }
                             return false;
                         }
+                        //si puede ser horizontal
                         else{
-                            actualiceMatrizAux ("Horizontal");
+                            //verifica contenido
+                          Point puntoReferencia = retornaSiguientePoint();
+                          Point ficha = new Point (matrix[puntoReferencia.x][puntoReferencia.y],matrix[puntoReferencia.x][puntoReferencia.y+1]);
+                          if (!comprobarExistencia(ficha)){
+                              System.out.println("Agrega la ficha horizontal");
+                              dominoes.add(ficha);//agrega la ficha a dominoes para validar contenido
+                              actualiceMatrizAux ("Horizontal");
+                          }
+                          else{
+                              return false;
+                            }
                         }
                     }
+                
                 else{
                     //verificar si la ficha puede ser vertical
                     if (!esVertical()){
@@ -289,7 +300,18 @@ public class Dominosa {
                         return false;
                     }
                     else{
-                        actualiceMatrizAux ("Vertical");
+                        Point puntoReferencia = retornaSiguientePoint();
+                        Point ficha = new Point (matrix[puntoReferencia.x][puntoReferencia.y],matrix[puntoReferencia.x+1][puntoReferencia.y]);
+
+                        if (!comprobarExistencia(ficha)){
+                            dominoes.add(ficha);//agrega la ficha a dominoes para validar contenido*/
+                            actualiceMatrizAux ("Vertical");
+                        }
+
+                        else{
+                          //si llega aca el contenido de la ficha es repetido 
+                          return false;
+                        }
                     }
                 }
             }else{
@@ -309,8 +331,13 @@ public class Dominosa {
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
         
+        //limipia soluciones anteriores
+        noSoluciones = new ArrayList<String>();
+        
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
+            dominoes = new ArrayList<Point>();
+
             //*-Generar matriz gemela de "8"
             matrixAux = generarmatriz (matrix.length, matrix[0].length);
             //1-Obtener posible combinacion i
