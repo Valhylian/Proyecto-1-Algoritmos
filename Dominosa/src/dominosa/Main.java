@@ -15,7 +15,7 @@ public class Main {
 
          int matrix[][]={{1,1,0,2},{2,0,0,0},{2,2,1,1}};
          Dominosa juego = new Dominosa();
-         System.out.println(juego.fuerzaBrutaPrueba(matrix));
+         //System.out.println(juego.fuerzaBrutaPrueba(matrix));
          System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
          System.out.println(juego.BacktrackingPrueba(matrix));
          //juego.imprimirMatriz(juego.generarmatriz(3,3));
