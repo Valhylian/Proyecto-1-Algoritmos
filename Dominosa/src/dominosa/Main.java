@@ -12,10 +12,11 @@ package dominosa;
 public class Main {
     
      public static void main(String[] args) {
-
+        
          int matrix[][]={{1,1,0,2},{2,0,0,0},{2,2,1,1}};
          Dominosa juego = new Dominosa();
-         System.out.println(juego.fuerzaBrutaPrueba(matrix));
+         //System.out.println(juego.fuerzaBrutaPrueba(matrix));
+         juego.auxiliarFuerzaBruta(matrix);
          System.out.println("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
          juego.imprimirMatricesSoluciones();
          //System.out.println(juego.BacktrackingPrueba(matrix));
@@ -24,3 +25,7 @@ public class Main {
     }
      
 }
+
+
+
+    

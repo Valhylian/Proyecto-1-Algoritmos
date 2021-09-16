@@ -6,6 +6,11 @@
 package dominosa;
 
 import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 
@@ -25,11 +30,75 @@ public class Dominosa {
 
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
     public static ArrayList<String> noSoluciones = new ArrayList<String>(); //Substrings de soluciones incorrectas
+    public static ArrayList<String> solucionesGeneral = new ArrayList<String>(); //lo agregue para generar los archivos (hay que limpiarlo)
     public static int matrixAux[][];
     public static ArrayList<int[][]> solucionesMatrices = new ArrayList<int[][]>();
+    public static int contadorFallos = 0; //lo agregue para los archivos (recordar fijarse si lo estamos limpiando)
    
+    //RETORNA LA RUTA ABSOLUTA DEL PROYECTO---------------------------------------
+    public String getRuta () {
+	Path path = Paths.get("");
+	String directoryName = path.toAbsolutePath().toString();
+	System.out.println("Current Working Directory is = " +directoryName);
+        return directoryName;
+    }
+    
+    //PRUEBA ESCRITURA DE ARCHIVOS-----------------------------------------------
+    //USADO EN OTRO METODO
+    public void crearArchivo(String info, String nombre){
+        try {
+            String ruta = getRuta ()+"/Archivos/"+nombre+".txt";
+            String contenido = info;
+            File file = new File(ruta);
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(contenido);
+            bw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    
+    //GENERA EL ARCHIVO DE SOLUCION DE FUERZA BRUTA CON UN FORMATO ESPECIFICO-------
+    public String generarFormato_FuerzaBruta(int matrix[][],long tiempoEjecucion){
+        int size = matrix.length-1;
+        String contenido = "Fuerza Bruta\n\nSize: "+size+"\n\n";
+        contenido += "Matriz analizada\n";
+        for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    contenido += matrix[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+        //lista de soluciones
+        contenido += "\nSoluciones:\n";
+        for (int i=0; i<solucionesGeneral.size();i++){
+            contenido += solucionesGeneral.get(i)+"\t";
+        }
+        //lista de matrices
+        contenido += "\n\nMatrices de Soluciones:\n";
+        for (int x=0; x<solucionesMatrices.size();x++){
+            int [][] matrizAux = solucionesMatrices.get(x);
+            for (int i = 0; i < matrizAux.length; i++) {
+                for (int j = 0; j < matrizAux[i].length; j++) {
+                    contenido += matrizAux[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+            contenido += "\n";
+        }
+        contenido += "Tiempo de ejecucion: "+tiempoEjecucion+"\n";
+        contenido += "Cantidad de Fallos: "+contadorFallos;
+        
+        crearArchivo(contenido, "FuerzaBruta_Doble"+size);
+        return contenido;
+    }
   
-    //GENERA MATRIZ X*Y/////////////////////////////////////
+    //GENERA MATRIZ X*Y ----------------------------------------------------------
     public int[][] generarmatriz (int filas, int columnas){
         int matriz[][] = new int[filas][columnas];
         for (int x=0; x < matriz.length; x++) {
@@ -40,6 +109,8 @@ public class Dominosa {
         return matriz;
     }
      
+    //ACTUALIZA LA MATRIZAUX (GLOBAL) PARA LA SOLUCIONES -------------------------
+    //USAMOS ESTA MATRIZ PARA VALIDAR LA ORIENTACION DE LAS FICHAS
     public void actualiceMatrizAux (String orientacion){
         Point point = retornaSiguientePoint();
             int x = point.x;
@@ -55,7 +126,7 @@ public class Dominosa {
         }
     }
     
-    //IMPRIME MATRIZ ///////////////////////////////////////
+    //IMPRIME MATRIZ --------------------------------------------------------------
     public void imprimirMatriz (int matrix[][]){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
@@ -214,14 +285,16 @@ public class Dominosa {
     
     public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
         solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();
+        contadorFallos = 0; //limpiamos el contador de fallos
+        
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-         
-        
+              
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
             //System.out.println("INICIA LA OTRA SOLUCION");
@@ -242,6 +315,8 @@ public class Dominosa {
             }
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
         return soluciones;
     }
 
@@ -341,9 +416,10 @@ public class Dominosa {
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-        
+        contadorFallos = 0; //limpiamos el contador de fallos
         //limipia soluciones anteriores
         noSoluciones = new ArrayList<String>();
+        solucionesGeneral = new ArrayList<String>();//limpia resplado de soluciones
         
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
@@ -363,6 +439,17 @@ public class Dominosa {
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
         System.out.println(noSoluciones);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
         return soluciones;
+    }
+    
+    
+    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
+    public void auxiliarFuerzaBruta(int matrix[][]){
+        long startTime = System.nanoTime();
+        fuerzaBrutaPrueba(matrix);// llamamos al método
+        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
+        generarFormato_FuerzaBruta(matrix,endTime);
     }
 }
