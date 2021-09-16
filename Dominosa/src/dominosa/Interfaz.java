@@ -23,8 +23,10 @@ public class Interfaz extends javax.swing.JFrame {
         initComponents();
     }
     public static JButton [][]matrizBotones;
+
     
     public void generarMatrizGrafica (int matrix[][]){
+        
         int ancho = matrix[0].length;
         int largo = matrix.length;
         matrizBotones = new JButton[largo][ancho];
@@ -33,11 +35,19 @@ public class Interfaz extends javax.swing.JFrame {
             for (int j=0; j<ancho; j++){
                 String contenido =Integer.toString(matrix[i][j]);
                 matrizBotones[i][j] = new JButton(contenido);
+                //matrizBotones[i][j].setSize(largo/largo, ancho/ancho);
                 panelMatriz.add(matrizBotones[i][j]);
             }
         }
+        RedibujarTablero();
     }
-    
+    private void RedibujarTablero()
+    {
+        //Se valida los componentes del elemento pnlTablero
+        panelMatriz.validate();
+        //Se redibuja el elemento pnlTablero y sus componentes hijos
+        panelMatriz.repaint();
+    }
     public void pintarMatriz (int matriz[][]){
         for (int x=0; x<matriz.length; x++){
             for (int y=0; y<matriz[0].length; y++){
@@ -62,50 +72,32 @@ public class Interfaz extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         panelMatriz = new javax.swing.JPanel();
-        ButtonSiguiente = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         javax.swing.GroupLayout panelMatrizLayout = new javax.swing.GroupLayout(panelMatriz);
         panelMatriz.setLayout(panelMatrizLayout);
         panelMatrizLayout.setHorizontalGroup(
             panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 208, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
         panelMatrizLayout.setVerticalGroup(
             panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 254, Short.MAX_VALUE)
+            .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        ButtonSiguiente.setText("Siguiente >>");
-        ButtonSiguiente.addActionListener(new java.awt.event.ActionListener() {
+        jPanel1.add(panelMatriz, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 300, 340));
+
+        jButton1.setText("Siguiente >>");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonSiguienteActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addComponent(ButtonSiguiente)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
-                .addComponent(panelMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(panelMatriz, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(ButtonSiguiente)
-                .addGap(79, 79, 79))
-        );
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -121,9 +113,9 @@ public class Interfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ButtonSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonSiguienteActionPerformed
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_ButtonSiguienteActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -156,17 +148,23 @@ public class Interfaz extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 Interfaz inter = new Interfaz();
-                int matrix[][]={{1,1,0,2},{2,0,0,0},{2,2,1,1}};
-                int matrixPruebaColores [][]={{0,0,0,0},{1,0,0,1},{1,0,0,1}};
+                inter.setResizable(false);
+                inter.setSize(800,600);
+                int matrix[][]={{1,1,0,2,3},{1,1,2,2,3},{2,3,2,0,3},{0,1,3,0,0}};
+                int matrixPruebaColores [][]={{0,0,0,0,1},{1,1,0,0,1},{1,1,1,0,0},{0,0,1,0,0}};
                 inter.generarMatrizGrafica (matrix);
                 inter.pintarMatriz (matrixPruebaColores);
                 inter.setVisible(true);
             }
+             
+ 
+ 
+ 
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton ButtonSiguiente;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel panelMatriz;
     // End of variables declaration//GEN-END:variables
