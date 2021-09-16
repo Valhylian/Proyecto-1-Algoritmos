@@ -98,6 +98,46 @@ public class Dominosa {
         return contenido;
     }
   
+        //GENERA EL ARCHIVO DE SOLUCION DE FUERZA BRUTA CON UN FORMATO ESPECIFICO-------
+    public String generarFormato_Backtracking(int matrix[][],long tiempoEjecucion){
+        int size = matrix.length-1;
+        String contenido = "Backtracking\n\nSize: "+size+"\n\n";
+        contenido += "Matriz analizada\n";
+        for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    contenido += matrix[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+        //lista de soluciones
+        contenido += "\nSoluciones:\n";
+        for (int i=0; i<solucionesGeneral.size();i++){
+            contenido += solucionesGeneral.get(i)+"\t";
+        }
+        //lista de matrices
+        contenido += "\n\nMatrices de Soluciones:\n";
+        for (int x=0; x<solucionesMatrices.size();x++){
+            int [][] matrizAux = solucionesMatrices.get(x);
+            for (int i = 0; i < matrizAux.length; i++) {
+                for (int j = 0; j < matrizAux[i].length; j++) {
+                    contenido += matrizAux[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+            contenido += "\n";
+        }
+        
+        contenido += "\nNo soluciones (Podas):\n";
+        for (int i=0; i<noSoluciones.size();i++){
+            contenido += noSoluciones.get(i)+"\t";
+        }
+        contenido += "\n\nTiempo de ejecucion: "+tiempoEjecucion+"\n";
+        contenido += "Cantidad de Fallos: "+contadorFallos;
+        
+        crearArchivo(contenido, "Backtracking_Doble"+size);
+        return contenido;
+    }
+    
     //GENERA MATRIZ X*Y ----------------------------------------------------------
     public int[][] generarmatriz (int filas, int columnas){
         int matriz[][] = new int[filas][columnas];
@@ -432,7 +472,8 @@ public class Dominosa {
             //2- llama a esSolucion
             if (esSolucionBacktracking(posibleSolucion,matrix)){
                 //agregar solucion a algun arreglo
-                soluciones.add(posibleSolucion);    
+                soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
             }else{
                 cantidadFallos+=1;
             }
@@ -451,5 +492,13 @@ public class Dominosa {
         fuerzaBrutaPrueba(matrix);// llamamos al método
         long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
         generarFormato_FuerzaBruta(matrix,endTime);
+    }
+    
+    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
+    public void auxiliarBacktracking(int matrix[][]){
+        long startTime = System.nanoTime();
+        BacktrackingPrueba(matrix);// llamamos al método
+        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
+        generarFormato_Backtracking(matrix,endTime);
     }
 }
