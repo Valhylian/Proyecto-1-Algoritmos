@@ -29,7 +29,8 @@ public class Dominosa {
      */
 
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
-    public static ArrayList<String> noSoluciones = new ArrayList<String>(); //Substrings de soluciones incorrectas
+    public static ArrayList<String> noSoluciones0 = new ArrayList<String>(); //Substrings de soluciones incorrectas
+    public static ArrayList<String> noSoluciones1 = new ArrayList<String>(); //Substrings de soluciones incorrectas
     public static ArrayList<String> solucionesGeneral = new ArrayList<String>(); //lo agregue para generar los archivos (hay que limpiarlo)
     public static int matrixAux[][];
     public static ArrayList<int[][]> solucionesMatrices = new ArrayList<int[][]>();
@@ -39,7 +40,7 @@ public class Dominosa {
     public String getRuta () {
 	Path path = Paths.get("");
 	String directoryName = path.toAbsolutePath().toString();
-	System.out.println("Current Working Directory is = " +directoryName);
+	System.out.println("El directorio de este proyecto: " +directoryName);
         return directoryName;
     }
     
@@ -128,8 +129,11 @@ public class Dominosa {
         }
         
         contenido += "\nNo soluciones (Podas):\n";
-        for (int i=0; i<noSoluciones.size();i++){
-            contenido += noSoluciones.get(i)+"\t";
+        for (int i=0; i<noSoluciones0.size();i++){
+            contenido += noSoluciones0.get(i)+"\t";
+        }
+        for (int i=0; i<noSoluciones1.size();i++){
+            contenido += noSoluciones1.get(i)+"\t";
         }
         contenido += "\n\nTiempo de ejecucion: "+tiempoEjecucion+"\n";
         contenido += "Cantidad de Fallos: "+contadorFallos;
@@ -369,17 +373,35 @@ public class Dominosa {
 
     public boolean verificadorSoluciones(String solucion){
         int contadorLetras=0; 
-        for(int i=0; i<noSoluciones.size(); i++){
-            contadorLetras=noSoluciones.get(i).length(); 
-            //System.out.println("S: "+solucion);
-            //System.out.println("SS "+solucion.substring(0,contadorLetras));
-            //System.out.println("NS "+noSoluciones.get(i));
-            if(solucion.substring(0,contadorLetras).equals(noSoluciones.get(i))){
-                //System.out.println("Verificador retorna false");
+        if(solucion.startsWith("0")){
+            for(int i=0; i<noSoluciones0.size(); i++){
+                contadorLetras=noSoluciones0.get(i).length(); 
                 //System.out.println("S: "+solucion);
                 //System.out.println("SS "+solucion.substring(0,contadorLetras));
                 //System.out.println("NS "+noSoluciones.get(i));
-                return false;      
+                if(solucion.substring(0,contadorLetras).equals(noSoluciones0.get(i))){
+                    //System.out.println("Verificador retorna false");
+                    //System.out.println("S: "+solucion);
+                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                    //System.out.println("NS "+noSoluciones.get(i));
+                    return false;      
+                }
+        
+            }
+        }else{
+             for(int i=0; i<noSoluciones1.size(); i++){
+                contadorLetras=noSoluciones1.get(i).length(); 
+                //System.out.println("S: "+solucion);
+                //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                //System.out.println("NS "+noSoluciones.get(i));
+                if(solucion.substring(0,contadorLetras).equals(noSoluciones1.get(i))){
+                    //System.out.println("Verificador retorna false");
+                    //System.out.println("S: "+solucion);
+                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                    //System.out.println("NS "+noSoluciones.get(i));
+                    return false;  
+                }
+                
             }
         }
         return true;
@@ -397,7 +419,11 @@ public class Dominosa {
                         //verificar si la ficha puede ser horizontal
                         if (!esHorizontal()){
                             if(posicionesProceso.length()<solucion.length()){
-                                noSoluciones.add(posicionesProceso);
+                                if(posicionesProceso.startsWith("0")){
+                                    noSoluciones0.add(posicionesProceso);
+                                }else{
+                                    noSoluciones1.add(posicionesProceso);
+                                }   
                             }
                             return false;
                         }
@@ -421,7 +447,11 @@ public class Dominosa {
                     //verificar si la ficha puede ser vertical
                     if (!esVertical()){
                         if(posicionesProceso.length()<solucion.length()){
-                            noSoluciones.add(posicionesProceso);
+                            if(posicionesProceso.startsWith("0")){
+                                noSoluciones0.add(posicionesProceso);
+                            }else{
+                                noSoluciones1.add(posicionesProceso);
+                            }
                         }
                         return false;
                     }
@@ -458,7 +488,8 @@ public class Dominosa {
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
         contadorFallos = 0; //limpiamos el contador de fallos
         //limipia soluciones anteriores
-        noSoluciones = new ArrayList<String>();
+        noSoluciones0 = new ArrayList<String>();
+        noSoluciones1 = new ArrayList<String>();
         solucionesGeneral = new ArrayList<String>();//limpia resplado de soluciones
         
         //3-Ciclo para recorrer combinaciones
@@ -479,7 +510,8 @@ public class Dominosa {
             }
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
-        System.out.println(noSoluciones);
+        System.out.println(noSoluciones0);
+        System.out.println(noSoluciones1);
         solucionesGeneral = soluciones;
         contadorFallos = cantidadFallos;
         return soluciones;

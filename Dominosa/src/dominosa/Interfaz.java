@@ -82,9 +82,12 @@ public class Interfaz extends javax.swing.JFrame {
         jTextArea2 = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        panelMatriz = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        jTextArea4 = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
         jTextArea3 = new javax.swing.JTextArea();
-        panelMatriz = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
         jFrame1.getContentPane().setLayout(jFrame1Layout);
@@ -146,7 +149,7 @@ public class Interfaz extends javax.swing.JFrame {
             }
         });
         panelFondo.add(jButton3);
-        jButton3.setBounds(470, 400, 200, 29);
+        jButton3.setBounds(470, 510, 200, 29);
 
         jTextArea2.setColumns(20);
         jTextArea2.setLineWrap(true);
@@ -167,21 +170,13 @@ public class Interfaz extends javax.swing.JFrame {
 
         jLabel3.setFont(new java.awt.Font("Century Gothic", 3, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText(" Fuerza Bruta ");
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Matriz a ingresar:");
         jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
         panelFondo.add(jLabel3);
-        jLabel3.setBounds(83, 101, 158, 33);
+        jLabel3.setBounds(470, 70, 220, 33);
         jLabel3.getAccessibleContext().setAccessibleName(" FuerzaBruta ");
         jLabel3.getAccessibleContext().setAccessibleDescription("");
-
-        jTextArea3.setColumns(20);
-        jTextArea3.setLineWrap(true);
-        jTextArea3.setRows(5);
-        jTextArea3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jScrollPane3.setViewportView(jTextArea3);
-
-        panelFondo.add(jScrollPane3);
-        jScrollPane3.setBounds(50, 150, 226, 340);
 
         panelMatriz.setBackground(new java.awt.Color(0, 0, 0));
         panelMatriz.setBorder(new javax.swing.border.MatteBorder(null));
@@ -190,15 +185,40 @@ public class Interfaz extends javax.swing.JFrame {
         panelMatriz.setLayout(panelMatrizLayout);
         panelMatrizLayout.setHorizontalGroup(
             panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 346, Short.MAX_VALUE)
+            .addGap(0, 268, Short.MAX_VALUE)
         );
         panelMatrizLayout.setVerticalGroup(
             panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 307, Short.MAX_VALUE)
+            .addGap(0, 238, Short.MAX_VALUE)
         );
 
         panelFondo.add(panelMatriz);
-        panelMatriz.setBounds(390, 70, 348, 309);
+        panelMatriz.setBounds(430, 260, 270, 240);
+
+        jTextArea4.setColumns(20);
+        jTextArea4.setLineWrap(true);
+        jTextArea4.setRows(5);
+        jTextArea4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane4.setViewportView(jTextArea4);
+
+        panelFondo.add(jScrollPane4);
+        jScrollPane4.setBounds(50, 150, 226, 340);
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setLineWrap(true);
+        jTextArea3.setRows(5);
+        jTextArea3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane3.setViewportView(jTextArea3);
+
+        panelFondo.add(jScrollPane3);
+        jScrollPane3.setBounds(380, 120, 390, 110);
+
+        jLabel4.setFont(new java.awt.Font("Century Gothic", 3, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText(" Fuerza Bruta ");
+        jLabel4.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
+        panelFondo.add(jLabel4);
+        jLabel4.setBounds(83, 101, 158, 33);
 
         getContentPane().add(panelFondo);
         panelFondo.setBounds(0, 0, 1150, 560);
@@ -273,10 +293,13 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextArea jTextArea2;
     private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JTextArea jTextArea4;
     private javax.swing.JPanel panelFondo;
     private javax.swing.JPanel panelMatriz;
     // End of variables declaration//GEN-END:variables
