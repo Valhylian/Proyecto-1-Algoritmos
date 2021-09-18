@@ -6,6 +6,13 @@
 package dominosa;
 
 import java.util.ArrayList;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 
 
@@ -22,13 +29,141 @@ public class Dominosa {
     /**
      * @param args the command line arguments
      */
-
+    
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
-    public static ArrayList<String> noSoluciones = new ArrayList<String>(); //Substrings de soluciones incorrectas
+    public static ArrayList<String> noSoluciones0 = new ArrayList<String>(); //Substrings de soluciones incorrectas
+    public static ArrayList<String> noSoluciones1 = new ArrayList<String>(); //Substrings de soluciones incorrectas
+    public static ArrayList<String> solucionesGeneral = new ArrayList<String>(); //lo agregue para generar los archivos (hay que limpiarlo)
     public static int matrixAux[][];
-   
+    public static ArrayList<int[][]> solucionesMatrices = new ArrayList<int[][]>();
+    public static int contadorFallos = 0; //lo agregue para los archivos (recordar fijarse si lo estamos limpiando)
+
+    //RETORNA LA RUTA ABSOLUTA DEL PROYECTO---------------------------------------
+    public String getRuta () {
+	Path path = Paths.get("");
+	String directoryName = path.toAbsolutePath().toString();
+	System.out.println("El directorio de este proyecto: " +directoryName);
+        return directoryName;
+    }
+    
+    //PRUEBA ESCRITURA DE ARCHIVOS-----------------------------------------------
+    //USADO EN OTRO METODO
+    public void crearArchivo(String info, String nombre){
+        try {
+            String ruta = getRuta()+"/Archivos/"+nombre+".txt";
+            String contenido = info;
+            File file = new File(ruta);
+            // Si el archivo no existe es creado
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            FileWriter fw = new FileWriter(file);
+            BufferedWriter bw = new BufferedWriter(fw);
+            bw.write(contenido);
+            bw.close();
+          
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
   
-    //GENERA MATRIZ X*Y/////////////////////////////////////
+    //GENERA EL ARCHIVO DE SOLUCION DE FUERZA BRUTA CON UN FORMATO ESPECIFICO-------
+    public String generarFormato_FuerzaBruta(int matrix[][],long tiempoEjecucion){
+        int size = matrix.length-1;
+        String contenido = "Fuerza Bruta\n\nSize: "+size+"\n\n";
+        contenido += "Matriz analizada\n";
+        for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    contenido += matrix[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+        //lista de soluciones
+        contenido += "\nSoluciones:\n";
+        for (int i=0; i<solucionesGeneral.size();i++){
+            contenido += solucionesGeneral.get(i)+"\n";
+        }
+        //lista de matrices
+        contenido += "\n\nMatrices de Soluciones:\n";
+        for (int x=0; x<solucionesMatrices.size();x++){
+            int [][] matrizAux = solucionesMatrices.get(x);
+            for (int i = 0; i < matrizAux.length; i++) {
+                for (int j = 0; j < matrizAux[i].length; j++) {
+                    contenido += matrizAux[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+            contenido += "\n";
+        }
+        contenido += "Tiempo de ejecucion: "+tiempoEjecucion+"\n";
+        contenido += "Cantidad de Fallos: "+contadorFallos;
+        
+        dominosa.Interfaz.escribirTextBoxFuerzaBruta(contenido);
+        crearArchivo(contenido, "FuerzaBruta_Doble"+size);
+        return contenido;
+    }
+        
+        //GENERA EL ARCHIVO DE SOLUCION DE BACKTRACKING CON UN FORMATO ESPECIFICO-------
+    public String generarFormato_Backtracking(int matrix[][],long tiempoEjecucion){
+        int size = matrix.length-1;
+        String contenido = "Backtracking\n\nSize: "+size+"\n\n";
+        contenido += "Matriz analizada\n";
+        for (int i = 0; i < matrix.length; i++) {
+                for (int j = 0; j < matrix[i].length; j++) {
+                    contenido += matrix[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+        //lista de soluciones
+        contenido += "\nSoluciones:\n";
+        for (int i=0; i<solucionesGeneral.size();i++){
+            contenido += solucionesGeneral.get(i)+"\n";
+        }
+        //lista de matrices
+        contenido += "\n\nMatrices de Soluciones:\n";
+        for (int x=0; x<solucionesMatrices.size();x++){
+            int [][] matrizAux = solucionesMatrices.get(x);
+            for (int i = 0; i < matrizAux.length; i++) {
+                for (int j = 0; j < matrizAux[i].length; j++) {
+                    contenido += matrizAux[i][j] + " ";
+                }
+            contenido += "\n";
+            }
+            contenido += "\n";
+        }
+        
+        contenido += "\nNo soluciones (Podas):\n";
+        for (int i=0; i<noSoluciones0.size();i++){
+            contenido += noSoluciones0.get(i)+"\n";
+        }
+        for (int i=0; i<noSoluciones1.size();i++){
+            contenido += noSoluciones1.get(i)+"\n";
+        }
+        contenido += "\n\nTiempo de ejecucion: "+tiempoEjecucion+"\n";
+        contenido += "Cantidad de Fallos: "+contadorFallos;
+        dominosa.Interfaz.escribirTextBoxBacktracking(contenido);
+        crearArchivo(contenido, "Backtracking_Doble"+size);
+        return contenido;
+    }
+    
+    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
+    public void auxiliarFuerzaBruta(int matrix[][]){
+        long startTime = System.nanoTime();
+        fuerzaBrutaPrueba(matrix);// llamamos al método
+        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
+        generarFormato_FuerzaBruta(matrix,endTime);
+    }
+    
+    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
+    public void auxiliarBacktracking(int matrix[][]){
+        long startTime = System.nanoTime();
+        BacktrackingPrueba(matrix);// llamamos al método
+        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
+        generarFormato_Backtracking(matrix,endTime);
+    }
+    
+    
+    //GENERA MATRIZ X*Y ----------------------------------------------------------
     public int[][] generarmatriz (int filas, int columnas){
         int matriz[][] = new int[filas][columnas];
         for (int x=0; x < matriz.length; x++) {
@@ -39,6 +174,8 @@ public class Dominosa {
         return matriz;
     }
      
+    //ACTUALIZA LA MATRIZAUX (GLOBAL) PARA LA SOLUCIONES -------------------------
+    //USAMOS ESTA MATRIZ PARA VALIDAR LA ORIENTACION DE LAS FICHAS
     public void actualiceMatrizAux (String orientacion){
         Point point = retornaSiguientePoint();
             int x = point.x;
@@ -54,7 +191,7 @@ public class Dominosa {
         }
     }
     
-    //IMPRIME MATRIZ ///////////////////////////////////////
+    //IMPRIME MATRIZ --------------------------------------------------------------
     public void imprimirMatriz (int matrix[][]){
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
@@ -157,6 +294,8 @@ public class Dominosa {
         }
         return false;
     }
+    
+    
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
      
     public boolean esSolucionFuerzaBruta (String solucion, int matrix[][]){
@@ -174,7 +313,7 @@ public class Dominosa {
                   Point puntoReferencia = retornaSiguientePoint();
                   Point ficha = new Point (matrix[puntoReferencia.x][puntoReferencia.y],matrix[puntoReferencia.x][puntoReferencia.y+1]);
                   if (!comprobarExistencia(ficha)){
-                      System.out.println("Agrega la ficha horizontal");
+                      //System.out.println("Agrega la ficha horizontal");
                       dominoes.add(ficha);//agrega la ficha a dominoes para validar contenido
                       actualiceMatrizAux ("Horizontal");
                   }
@@ -212,13 +351,17 @@ public class Dominosa {
     }
     
     public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();
+        contadorFallos = 0; //limpiamos el contador de fallos
+        
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-        
+              
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
             //System.out.println("INICIA LA OTRA SOLUCION");
@@ -232,30 +375,56 @@ public class Dominosa {
             if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
                 //agregar solucion a soluciones
                 soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
                 
             }else{
                 cantidadFallos+=1;
             }
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
         return soluciones;
     }
 
+    public void imprimirMatricesSoluciones(){
+        for (int i=0; i<solucionesMatrices.size();i++){
+            imprimirMatriz(solucionesMatrices.get(i));
+        }
+    }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public boolean verificadorSoluciones(String solucion){
         int contadorLetras=0; 
-        for(int i=0; i<noSoluciones.size(); i++){
-            contadorLetras=noSoluciones.get(i).length(); 
-            //System.out.println("S: "+solucion);
-            //System.out.println("SS "+solucion.substring(0,contadorLetras));
-            //System.out.println("NS "+noSoluciones.get(i));
-            if(solucion.substring(0,contadorLetras).equals(noSoluciones.get(i))){
-                //System.out.println("Verificador retorna false");
+        if(solucion.startsWith("0")){
+            for(int i=0; i<noSoluciones0.size(); i++){
+                contadorLetras=noSoluciones0.get(i).length(); 
                 //System.out.println("S: "+solucion);
                 //System.out.println("SS "+solucion.substring(0,contadorLetras));
                 //System.out.println("NS "+noSoluciones.get(i));
-                return false;      
+                if(solucion.substring(0,contadorLetras).equals(noSoluciones0.get(i))){
+                    //System.out.println("Verificador retorna false");
+                    //System.out.println("S: "+solucion);
+                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                    //System.out.println("NS "+noSoluciones.get(i));
+                    return false;      
+                }
+        
+            }
+        }else{
+             for(int i=0; i<noSoluciones1.size(); i++){
+                contadorLetras=noSoluciones1.get(i).length(); 
+                //System.out.println("S: "+solucion);
+                //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                //System.out.println("NS "+noSoluciones.get(i));
+                if(solucion.substring(0,contadorLetras).equals(noSoluciones1.get(i))){
+                    //System.out.println("Verificador retorna false");
+                    //System.out.println("S: "+solucion);
+                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
+                    //System.out.println("NS "+noSoluciones.get(i));
+                    return false;  
+                }
+                
             }
         }
         return true;
@@ -273,7 +442,11 @@ public class Dominosa {
                         //verificar si la ficha puede ser horizontal
                         if (!esHorizontal()){
                             if(posicionesProceso.length()<solucion.length()){
-                                noSoluciones.add(posicionesProceso);
+                                if(posicionesProceso.startsWith("0")){
+                                    noSoluciones0.add(posicionesProceso);
+                                }else{
+                                    noSoluciones1.add(posicionesProceso);
+                                }   
                             }
                             return false;
                         }
@@ -297,7 +470,11 @@ public class Dominosa {
                     //verificar si la ficha puede ser vertical
                     if (!esVertical()){
                         if(posicionesProceso.length()<solucion.length()){
-                            noSoluciones.add(posicionesProceso);
+                            if(posicionesProceso.startsWith("0")){
+                                noSoluciones0.add(posicionesProceso);
+                            }else{
+                                noSoluciones1.add(posicionesProceso);
+                            }
                         }
                         return false;
                     }
@@ -326,15 +503,19 @@ public class Dominosa {
     }
 
     public ArrayList<String> BacktrackingPrueba(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();
+        contadorFallos = 0; //limpiamos el contador de fallos
+        
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-        
         //limipia soluciones anteriores
-        noSoluciones = new ArrayList<String>();
+        noSoluciones0 = new ArrayList<String>();
+        noSoluciones1 = new ArrayList<String>();
         
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){
@@ -347,13 +528,19 @@ public class Dominosa {
             //2- llama a esSolucion
             if (esSolucionBacktracking(posibleSolucion,matrix)){
                 //agregar solucion a algun arreglo
-                soluciones.add(posibleSolucion);    
+                soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
             }else{
                 cantidadFallos+=1;
             }
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
-        System.out.println(noSoluciones);
+        System.out.println(noSoluciones0);
+        System.out.println(noSoluciones1);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
         return soluciones;
     }
 }
+    
+   
