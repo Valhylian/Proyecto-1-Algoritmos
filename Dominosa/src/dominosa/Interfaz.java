@@ -20,10 +20,11 @@ public class Interfaz extends javax.swing.JFrame {
      * Creates new form Interfaz
      */
     public Interfaz() {
+       
         initComponents();
     }
     public static JButton [][]matrizBotones;
-
+     
     
     public void generarMatrizGrafica (int matrix[][]){
         
@@ -35,6 +36,7 @@ public class Interfaz extends javax.swing.JFrame {
             for (int j=0; j<ancho; j++){
                 String contenido =Integer.toString(matrix[i][j]);
                 matrizBotones[i][j] = new JButton(contenido);
+                matrizBotones[i][j].setBackground(Color.BLACK);
                 //matrizBotones[i][j].setSize(largo/largo, ancho/ancho);
                 panelMatriz.add(matrizBotones[i][j]);
             }
@@ -70,45 +72,136 @@ public class Interfaz extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
-        panelMatriz = new javax.swing.JPanel();
+        jFrame1 = new javax.swing.JFrame();
+        panelFondo = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTextArea2 = new javax.swing.JTextArea();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTextArea3 = new javax.swing.JTextArea();
+        panelMatriz = new javax.swing.JPanel();
+
+        javax.swing.GroupLayout jFrame1Layout = new javax.swing.GroupLayout(jFrame1.getContentPane());
+        jFrame1.getContentPane().setLayout(jFrame1Layout);
+        jFrame1Layout.setHorizontalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 1201, Short.MAX_VALUE)
+        );
+        jFrame1Layout.setVerticalGroup(
+            jFrame1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 565, Short.MAX_VALUE)
+        );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Dominosa");
+        setMaximumSize(null);
+        setMinimumSize(null);
+        setPreferredSize(null);
+        setSize(new java.awt.Dimension(0, 0));
+        getContentPane().setLayout(null);
 
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        panelFondo.setBackground(new java.awt.Color(0, 0, 0));
+        panelFondo.setForeground(new java.awt.Color(0, 0, 0));
+        panelFondo.setFont(new java.awt.Font("Century Gothic", 1, 12)); // NOI18N
+        panelFondo.setLayout(null);
 
-        javax.swing.GroupLayout panelMatrizLayout = new javax.swing.GroupLayout(panelMatriz);
-        panelMatriz.setLayout(panelMatrizLayout);
-        panelMatrizLayout.setHorizontalGroup(
-            panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-        panelMatrizLayout.setVerticalGroup(
-            panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(panelMatriz, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 30, 300, 340));
-
+        jButton1.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jButton1.setText("Siguiente >>");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
             }
         });
-        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, -1, -1));
+        panelFondo.add(jButton1);
+        jButton1.setBounds(920, 510, 112, 25);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        jLabel1.setFont(new java.awt.Font("Century Gothic", 3, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Dominosa");
+        jLabel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
+        jLabel1.setOpaque(true);
+        panelFondo.add(jLabel1);
+        jLabel1.setBounds(-15, 18, 1170, 27);
+
+        jButton2.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
+        jButton2.setText("<< Siguiente");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        panelFondo.add(jButton2);
+        jButton2.setBounds(80, 510, 130, 25);
+
+        jButton3.setFont(new java.awt.Font("Century Gothic", 1, 18)); // NOI18N
+        jButton3.setText("Siguiente matriz");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+        panelFondo.add(jButton3);
+        jButton3.setBounds(470, 400, 200, 29);
+
+        jTextArea2.setColumns(20);
+        jTextArea2.setLineWrap(true);
+        jTextArea2.setRows(5);
+        jTextArea2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane2.setViewportView(jTextArea2);
+
+        panelFondo.add(jScrollPane2);
+        jScrollPane2.setBounds(864, 130, 226, 360);
+
+        jLabel2.setFont(new java.awt.Font("Century Gothic", 3, 24)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText(" Backtracking ");
+        jLabel2.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
+        panelFondo.add(jLabel2);
+        jLabel2.setBounds(890, 80, 171, 33);
+
+        jLabel3.setFont(new java.awt.Font("Century Gothic", 3, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText(" Fuerza Bruta ");
+        jLabel3.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 255, 255)));
+        panelFondo.add(jLabel3);
+        jLabel3.setBounds(83, 101, 158, 33);
+        jLabel3.getAccessibleContext().setAccessibleName(" FuerzaBruta ");
+        jLabel3.getAccessibleContext().setAccessibleDescription("");
+
+        jTextArea3.setColumns(20);
+        jTextArea3.setLineWrap(true);
+        jTextArea3.setRows(5);
+        jTextArea3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane3.setViewportView(jTextArea3);
+
+        panelFondo.add(jScrollPane3);
+        jScrollPane3.setBounds(50, 150, 226, 340);
+
+        panelMatriz.setBackground(new java.awt.Color(0, 0, 0));
+        panelMatriz.setBorder(new javax.swing.border.MatteBorder(null));
+
+        javax.swing.GroupLayout panelMatrizLayout = new javax.swing.GroupLayout(panelMatriz);
+        panelMatriz.setLayout(panelMatrizLayout);
+        panelMatrizLayout.setHorizontalGroup(
+            panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 346, Short.MAX_VALUE)
         );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        panelMatrizLayout.setVerticalGroup(
+            panelMatrizLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 307, Short.MAX_VALUE)
         );
+
+        panelFondo.add(panelMatriz);
+        panelMatriz.setBounds(390, 70, 348, 309);
+
+        getContentPane().add(panelFondo);
+        panelFondo.setBounds(0, 0, 1150, 560);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -116,6 +209,14 @@ public class Interfaz extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,10 +247,11 @@ public class Interfaz extends javax.swing.JFrame {
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 Interfaz inter = new Interfaz();
                 inter.setResizable(false);
-                inter.setSize(800,600);
+                inter.setSize(1150,600);
                 int matrix[][]={{1,1,0,2,3},{1,1,2,2,3},{2,3,2,0,3},{0,1,3,0,0}};
                 int matrixPruebaColores [][]={{0,0,0,0,1},{1,1,0,0,1},{1,1,1,0,0},{0,0,1,0,0}};
                 inter.generarMatrizGrafica (matrix);
@@ -165,7 +267,17 @@ public class Interfaz extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JFrame jFrame1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JTextArea jTextArea2;
+    private javax.swing.JTextArea jTextArea3;
+    private javax.swing.JPanel panelFondo;
     private javax.swing.JPanel panelMatriz;
     // End of variables declaration//GEN-END:variables
 }

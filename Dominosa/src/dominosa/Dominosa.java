@@ -98,7 +98,7 @@ public class Dominosa {
         return contenido;
     }
   
-        //GENERA EL ARCHIVO DE SOLUCION DE FUERZA BRUTA CON UN FORMATO ESPECIFICO-------
+        //GENERA EL ARCHIVO DE SOLUCION DE BACKTRACKING CON UN FORMATO ESPECIFICO-------
     public String generarFormato_Backtracking(int matrix[][],long tiempoEjecucion){
         int size = matrix.length-1;
         String contenido = "Backtracking\n\nSize: "+size+"\n\n";
