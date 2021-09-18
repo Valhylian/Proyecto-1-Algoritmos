@@ -77,22 +77,6 @@
         <Property name="useNullLayout" type="boolean" value="true"/>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="jButton1">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Siguiente &gt;&gt;"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="920" y="510" width="-1" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Component class="javax.swing.JLabel" name="jLabel1">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -115,38 +99,6 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JButton" name="jButton2">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="14" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="&lt;&lt; Siguiente"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton2ActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="80" y="510" width="130" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
-        <Component class="javax.swing.JButton" name="jButton3">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Century Gothic" size="18" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Siguiente matriz"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
-          </Events>
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="470" y="510" width="200" height="-1"/>
-            </Constraint>
-          </Constraints>
-        </Component>
         <Container class="javax.swing.JScrollPane" name="jScrollPane2">
           <AuxValues>
             <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -159,8 +111,9 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea2">
+            <Component class="javax.swing.JTextArea" name="backtrackingtxt">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
@@ -169,7 +122,13 @@
                     <BevelBorder/>
                   </Border>
                 </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Text Cursor"/>
+                </Property>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -267,17 +226,26 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTextArea" name="jTextArea4">
+            <Component class="javax.swing.JTextArea" name="fuerzabtxt">
               <Properties>
+                <Property name="editable" type="boolean" value="false"/>
                 <Property name="columns" type="int" value="20"/>
                 <Property name="lineWrap" type="boolean" value="true"/>
                 <Property name="rows" type="int" value="5"/>
+                <Property name="wrapStyleWord" type="boolean" value="true"/>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.BevelBorderInfo">
                     <BevelBorder/>
                   </Border>
                 </Property>
+                <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                  <Color id="Text Cursor"/>
+                </Property>
+                <Property name="doubleBuffered" type="boolean" value="true"/>
               </Properties>
+              <AuxValues>
+                <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="10"/>
+              </AuxValues>
             </Component>
           </SubComponents>
         </Container>
@@ -287,7 +255,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="380" y="120" width="390" height="110"/>
+              <AbsoluteConstraints x="380" y="120" width="390" height="40"/>
             </Constraint>
           </Constraints>
 
@@ -327,6 +295,38 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="83" y="101" width="-1" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton4">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Century Gothic" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Siguiente matriz"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton4ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="470" y="510" width="200" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButton3">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Century Gothic" size="18" style="1"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Ingresar matriz"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton3ActionPerformed"/>
+          </Events>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="480" y="170" width="200" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

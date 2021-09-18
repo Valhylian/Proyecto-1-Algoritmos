@@ -8,9 +8,11 @@ package dominosa;
 import java.util.ArrayList;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Scanner;
 
 
 
@@ -27,7 +29,7 @@ public class Dominosa {
     /**
      * @param args the command line arguments
      */
-
+    
     public static ArrayList<Point> dominoes = new ArrayList<Point>();
     public static ArrayList<String> noSoluciones0 = new ArrayList<String>(); //Substrings de soluciones incorrectas
     public static ArrayList<String> noSoluciones1 = new ArrayList<String>(); //Substrings de soluciones incorrectas
@@ -35,7 +37,7 @@ public class Dominosa {
     public static int matrixAux[][];
     public static ArrayList<int[][]> solucionesMatrices = new ArrayList<int[][]>();
     public static int contadorFallos = 0; //lo agregue para los archivos (recordar fijarse si lo estamos limpiando)
-   
+
     //RETORNA LA RUTA ABSOLUTA DEL PROYECTO---------------------------------------
     public String getRuta () {
 	Path path = Paths.get("");
@@ -48,7 +50,7 @@ public class Dominosa {
     //USADO EN OTRO METODO
     public void crearArchivo(String info, String nombre){
         try {
-            String ruta = getRuta ()+"/Archivos/"+nombre+".txt";
+            String ruta = getRuta()+"/Archivos/"+nombre+".txt";
             String contenido = info;
             File file = new File(ruta);
             // Si el archivo no existe es creado
@@ -59,11 +61,12 @@ public class Dominosa {
             BufferedWriter bw = new BufferedWriter(fw);
             bw.write(contenido);
             bw.close();
+          
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-    
+  
     //GENERA EL ARCHIVO DE SOLUCION DE FUERZA BRUTA CON UN FORMATO ESPECIFICO-------
     public String generarFormato_FuerzaBruta(int matrix[][],long tiempoEjecucion){
         int size = matrix.length-1;
@@ -78,7 +81,7 @@ public class Dominosa {
         //lista de soluciones
         contenido += "\nSoluciones:\n";
         for (int i=0; i<solucionesGeneral.size();i++){
-            contenido += solucionesGeneral.get(i)+"\t";
+            contenido += solucionesGeneral.get(i)+"\n";
         }
         //lista de matrices
         contenido += "\n\nMatrices de Soluciones:\n";
@@ -95,10 +98,11 @@ public class Dominosa {
         contenido += "Tiempo de ejecucion: "+tiempoEjecucion+"\n";
         contenido += "Cantidad de Fallos: "+contadorFallos;
         
+        dominosa.Interfaz.escribirTextBoxFuerzaBruta(contenido);
         crearArchivo(contenido, "FuerzaBruta_Doble"+size);
         return contenido;
     }
-  
+        
         //GENERA EL ARCHIVO DE SOLUCION DE BACKTRACKING CON UN FORMATO ESPECIFICO-------
     public String generarFormato_Backtracking(int matrix[][],long tiempoEjecucion){
         int size = matrix.length-1;
@@ -113,7 +117,7 @@ public class Dominosa {
         //lista de soluciones
         contenido += "\nSoluciones:\n";
         for (int i=0; i<solucionesGeneral.size();i++){
-            contenido += solucionesGeneral.get(i)+"\t";
+            contenido += solucionesGeneral.get(i)+"\n";
         }
         //lista de matrices
         contenido += "\n\nMatrices de Soluciones:\n";
@@ -130,17 +134,34 @@ public class Dominosa {
         
         contenido += "\nNo soluciones (Podas):\n";
         for (int i=0; i<noSoluciones0.size();i++){
-            contenido += noSoluciones0.get(i)+"\t";
+            contenido += noSoluciones0.get(i)+"\n";
         }
         for (int i=0; i<noSoluciones1.size();i++){
-            contenido += noSoluciones1.get(i)+"\t";
+            contenido += noSoluciones1.get(i)+"\n";
         }
         contenido += "\n\nTiempo de ejecucion: "+tiempoEjecucion+"\n";
         contenido += "Cantidad de Fallos: "+contadorFallos;
-        
+        dominosa.Interfaz.escribirTextBoxBacktracking(contenido);
         crearArchivo(contenido, "Backtracking_Doble"+size);
         return contenido;
     }
+    
+    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
+    public void auxiliarFuerzaBruta(int matrix[][]){
+        long startTime = System.nanoTime();
+        fuerzaBrutaPrueba(matrix);// llamamos al método
+        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
+        generarFormato_FuerzaBruta(matrix,endTime);
+    }
+    
+    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
+    public void auxiliarBacktracking(int matrix[][]){
+        long startTime = System.nanoTime();
+        BacktrackingPrueba(matrix);// llamamos al método
+        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
+        generarFormato_Backtracking(matrix,endTime);
+    }
+    
     
     //GENERA MATRIZ X*Y ----------------------------------------------------------
     public int[][] generarmatriz (int filas, int columnas){
@@ -273,6 +294,8 @@ public class Dominosa {
         }
         return false;
     }
+    
+    
  //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~   
      
     public boolean esSolucionFuerzaBruta (String solucion, int matrix[][]){
@@ -516,21 +539,6 @@ public class Dominosa {
         contadorFallos = cantidadFallos;
         return soluciones;
     }
-    
-    
-    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
-    public void auxiliarFuerzaBruta(int matrix[][]){
-        long startTime = System.nanoTime();
-        fuerzaBrutaPrueba(matrix);// llamamos al método
-        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
-        generarFormato_FuerzaBruta(matrix,endTime);
-    }
-    
-    //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
-    public void auxiliarBacktracking(int matrix[][]){
-        long startTime = System.nanoTime();
-        BacktrackingPrueba(matrix);// llamamos al método
-        long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
-        generarFormato_Backtracking(matrix,endTime);
-    }
 }
+    
+   
