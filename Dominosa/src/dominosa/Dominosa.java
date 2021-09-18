@@ -503,17 +503,19 @@ public class Dominosa {
     }
 
     public ArrayList<String> BacktrackingPrueba(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();
+        contadorFallos = 0; //limpiamos el contador de fallos
+        
         //1-Calcular la cantidad de fichas
         int cantFichas = (matrix.length * matrix[0].length)/2;
         int cantidadFallos=0;
         //2-Generar lista de posibles soluciones
         ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-        contadorFallos = 0; //limpiamos el contador de fallos
         //limipia soluciones anteriores
         noSoluciones0 = new ArrayList<String>();
         noSoluciones1 = new ArrayList<String>();
-        solucionesGeneral = new ArrayList<String>();//limpia resplado de soluciones
         
         //3-Ciclo para recorrer combinaciones
         for (int i=0; i<combinaciones.size(); i++){

@@ -21,7 +21,7 @@ public class Main {
          inter.setSize(1150,600);
          int matrixPruebaColores [][]={{0,0,0,0,1},{1,1,0,0,1},{1,1,1,0,0},{0,0,1,0,0}};
          inter.generarMatrizGrafica (matrix);
-         inter.pintarMatriz (matrixPruebaColores);
+         //inter.pintarMatriz (matrixPruebaColores);
          inter.setVisible(true);
          juego.auxiliarBacktracking(matrix);
          juego.auxiliarFuerzaBruta(matrix);
