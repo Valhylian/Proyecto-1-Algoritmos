@@ -10,12 +10,12 @@ package dominosa;
  * @author valeria
  */
 public class Main {
-    
+     public static Dominosa juego = new Dominosa();
      public static void main(String[] args) {
         
          
-         Dominosa juego = new Dominosa();
-         int matrix[][]={{1,1,0,2,3},{1,1,2,2,3},{2,3,2,0,3},{0,1,3,0,0}};
+         
+         int matrix[][]={{4,2,1,4,3,4},{4,4,0,2,0,1},{2,3,1,3,3,2},{0,1,3,3,4,2},{1,1,2,0,0,0}};
          Interfaz inter=new Interfaz();
          inter.setResizable(false);
          inter.setSize(1150,600);
@@ -25,7 +25,7 @@ public class Main {
          inter.setVisible(true);
          juego.auxiliarBacktracking(matrix);
          juego.auxiliarFuerzaBruta(matrix);
-         juego.imprimirMatricesSoluciones();
+         //juego.imprimirMatricesSoluciones();
          //System.out.println(juego.BacktrackingPrueba(matrix));
          //juego.imprimirMatriz(juego.generarmatriz(3,3));
          //System.out.println(juego.fuerzaBrutaPrueba(matrix));
