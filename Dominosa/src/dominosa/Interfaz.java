@@ -251,6 +251,7 @@ public class Interfaz extends javax.swing.JFrame {
     private void btn_solucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_solucionActionPerformed
         // TODO add your handling code here:
        // TODO add your handling code here:
+        
         matrizSoluciones=dominosa.Dominosa.solucionesMatrices;
         int [][] matrizAux = matrizSoluciones.get(contador);
         for (int i = 0; i < matrizAux.length; i++) {
@@ -264,7 +265,7 @@ public class Interfaz extends javax.swing.JFrame {
 
            }
        }
-        if(contador<matrizAux.length){
+        if(contador<matrizSoluciones.size()-1){
             contador+=1;    
         }else{
             JOptionPane.showMessageDialog(jFrame1, "Ya no hay más soluciones disponibles.");
