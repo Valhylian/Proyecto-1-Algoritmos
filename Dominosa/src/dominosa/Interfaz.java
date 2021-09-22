@@ -11,6 +11,7 @@ import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Toolkit;
 import java.util.ArrayList;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
@@ -24,6 +25,7 @@ public class Interfaz extends javax.swing.JFrame {
     /**
      * Creates new form Interfaz
      */
+    public static int matrixInput[][];
      
     public Interfaz() {
         initComponents();
@@ -37,9 +39,11 @@ public class Interfaz extends javax.swing.JFrame {
     
     public void generarMatrizGrafica (int matrix[][])
     {
-        
+        panelMatriz.removeAll();
+        RedibujarTablero();
         int ancho = matrix[0].length;
         int largo = matrix.length;
+        
         matrizBotones = new JButton[largo][ancho];
         panelMatriz.setLayout(new GridLayout(largo, ancho));
         for (int i=0; i<largo; i++){
@@ -78,14 +82,71 @@ public class Interfaz extends javax.swing.JFrame {
     
     public static void escribirTextBoxFuerzaBruta(String contenido)
     {
-        fuerzabtxt.append(contenido);
+        
+        fuerzabtxt.setText(contenido);
     }
     
     public static void escribirTextBoxBacktracking(String contenido)
     {
-        backtrackingtxt.append(contenido);
+        backtrackingtxt.setText(contenido);
     }
     
+    public int contarFilas (String matriz){
+        int filas = 1;
+        for (int i=0; i<matriz.length();i++){
+            if (matriz.charAt(i) == '\n'){
+                filas ++;
+            }
+        }
+        return filas;
+    }
+        public int contarColumnas (String matriz){
+        int columnas = 1;
+        for (int i=0; i<matriz.length();i++){
+            if (matriz.charAt(i) == '\n'){
+                break;
+            }
+            if (matriz.charAt(i) != ' '){
+                columnas++;
+            }
+        }
+        return columnas-1;
+    }
+       
+    public boolean validarFormatoMatriz (String matriz){
+        int filas = contarFilas (matriz);
+        int columnas = contarColumnas (matriz);
+        int x = 0;
+        int y = 0;
+        matrixInput = new int [filas][columnas];
+        System.out.println("fila "+filas);
+        System.out.println("columna "+columnas);
+        System.out.println("largo " + matriz.length());
+        try {
+            for (int i=0; i<matriz.length();i++){
+                if (matriz.charAt(i) == ' '){
+                    y++;
+                }
+                else if (matriz.charAt(i) == '\n'){
+                    x++;
+                    y=0;
+                }
+               
+                else{
+                    int elemento=Integer.parseInt(String.valueOf(matriz.charAt(i)));
+                    matrixInput[x][y] = elemento;
+                }
+            }
+        }
+          catch(Exception e) {
+            //  Block of code to handle errors
+              System.out.println(e);
+              
+              return false;
+        }
+        
+        return true;
+    }
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -106,7 +167,7 @@ public class Interfaz extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         fuerzabtxt = new javax.swing.JTextArea();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTextArea3 = new javax.swing.JTextArea();
+        text_matrizIngresada = new javax.swing.JTextArea();
         jLabel4 = new javax.swing.JLabel();
         btn_solucion = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -194,11 +255,11 @@ public class Interfaz extends javax.swing.JFrame {
         panelFondo.add(jScrollPane4);
         jScrollPane4.setBounds(50, 150, 226, 340);
 
-        jTextArea3.setColumns(20);
-        jTextArea3.setLineWrap(true);
-        jTextArea3.setRows(5);
-        jTextArea3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jScrollPane3.setViewportView(jTextArea3);
+        text_matrizIngresada.setColumns(20);
+        text_matrizIngresada.setLineWrap(true);
+        text_matrizIngresada.setRows(5);
+        text_matrizIngresada.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jScrollPane3.setViewportView(text_matrizIngresada);
 
         panelFondo.add(jScrollPane3);
         jScrollPane3.setBounds(380, 80, 390, 40);
@@ -244,13 +305,42 @@ public class Interfaz extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    //INGRESAR MATRIZ
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton3ActionPerformed
+        String matrizIngresada = text_matrizIngresada.getText();
+        System.out.println(matrizIngresada);
+        //validar el formato
+        if (validarFormatoMatriz(matrizIngresada)){
+            imprimirMatriz (matrixInput);
+            try {
+                contador = 0;
+                Main.juego.auxiliarBacktracking(matrixInput);
+                Main.juego.auxiliarFuerzaBruta(matrixInput);
+                generarMatrizGrafica (matrixInput);
+            }
+            catch(Exception e) {
+            //  Block of code to handle errors
+            JOptionPane.showMessageDialog(jFrame1, "Formato invalido");
+            }
+        }
+        else{
+            JOptionPane.showMessageDialog(jFrame1, "Formato invalido");
+        }
 
+    }//GEN-LAST:event_jButton3ActionPerformed
+        public void imprimirMatriz (int matrix[][]){
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
     private void btn_solucionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_solucionActionPerformed
         // TODO add your handling code here:
        // TODO add your handling code here:
+        
         matrizSoluciones=dominosa.Dominosa.solucionesMatrices;
         int [][] matrizAux = matrizSoluciones.get(contador);
         for (int i = 0; i < matrizAux.length; i++) {
@@ -264,7 +354,7 @@ public class Interfaz extends javax.swing.JFrame {
 
            }
        }
-        if(contador<matrizAux.length){
+        if(contador<matrizSoluciones.size()-1){
             contador+=1;    
         }else{
             JOptionPane.showMessageDialog(jFrame1, "Ya no hay más soluciones disponibles.");
@@ -327,8 +417,8 @@ public class Interfaz extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextArea jTextArea3;
     private javax.swing.JPanel panelFondo;
     private javax.swing.JPanel panelMatriz;
+    private javax.swing.JTextArea text_matrizIngresada;
     // End of variables declaration//GEN-END:variables
 }

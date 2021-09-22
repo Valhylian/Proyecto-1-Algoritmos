@@ -1,0 +1,26 @@
+Fuerza Bruta
+
+Size: 1
+
+Matriz analizada
+1 2 3 
+4 5 6 
+
+Soluciones:
+010
+100
+111
+
+
+Matrices de Soluciones:
+0 0 1 
+0 0 1 
+
+1 0 0 
+1 0 0 
+
+1 1 1 
+1 1 1 
+
+Tiempo de ejecucion: 272200
+Cantidad de Fallos: 5
