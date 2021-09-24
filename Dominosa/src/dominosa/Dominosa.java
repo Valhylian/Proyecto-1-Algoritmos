@@ -149,7 +149,7 @@ public class Dominosa {
     //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
     public void auxiliarFuerzaBruta(int matrix[][]){
         long startTime = System.nanoTime();
-        fuerzaBrutaPrueba(matrix);// llamamos al método
+        fuerzaBrutaPrueba2(matrix);// llamamos al método
         long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
         generarFormato_FuerzaBruta(matrix,endTime);
     }
@@ -157,7 +157,7 @@ public class Dominosa {
     //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
     public void auxiliarBacktracking(int matrix[][]){
         long startTime = System.nanoTime();
-        BacktrackingPrueba(matrix);// llamamos al método
+        BacktrackingPrueba2(matrix);// llamamos al método
         long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
         generarFormato_Backtracking(matrix,endTime);
     }
@@ -241,9 +241,6 @@ public class Dominosa {
         }
         int x = point.x;
         int y = point.y;
-        //System.out.println("Horizontal");
-        //System.out.println("x = "+x );
-        //System.out.println("y = "+y );
         //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
         if (y+1 >= matrixAux[0].length){
             //System.out.println("Falso por que se pasa");
@@ -345,11 +342,10 @@ public class Dominosa {
       
             }
         }
-        System.out.println(solucion);
-        System.out.println("Solucion = True");
+
         return true;
     }
-    
+    /*
     public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
         solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
         solucionesGeneral = new ArrayList<String>();
@@ -391,7 +387,7 @@ public class Dominosa {
         for (int i=0; i<solucionesMatrices.size();i++){
             imprimirMatriz(solucionesMatrices.get(i));
         }
-    }
+    }*/
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     public boolean verificadorSoluciones(String solucion){
@@ -501,7 +497,7 @@ public class Dominosa {
         //System.out.println("Solution = True");
         return true;
     }
-
+/*
     public ArrayList<String> BacktrackingPrueba(int matrix[][]){
         solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
         solucionesGeneral = new ArrayList<String>();
@@ -540,7 +536,86 @@ public class Dominosa {
         solucionesGeneral = soluciones;
         contadorFallos = cantidadFallos;
         return soluciones;
+    }*/
+    
+    ////////////////////////////////////////////////////////////////////////////
+        public ArrayList<String> fuerzaBrutaPrueba2(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>();  // limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();    //limpia arreflo de soluciones
+        contadorFallos = 0;                             //limpia el contador de fallos
+        
+        //1-Calcular la cantidad de fichas
+        int cantFichas = (matrix.length * matrix[0].length)/2;
+        int cantidadFallos=0;
+        int cantCombinaciones = (int)Math.pow(2, cantFichas);
+        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
+              
+        //3-Ciclo genera combiancion y la valida
+        for (int i=0; i<cantCombinaciones; i++){
+            dominoes = new ArrayList<Point>();
+            //*-Generar matriz gemela de "8"
+            matrixAux = generarmatriz (matrix.length, matrix[0].length);
+            //1-Obtener posible combinacion i
+            String posibleSolucion = Combinaciones.formatoCombinacion (cantFichas, i);
+            //2- llama a esSolucion
+            if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
+                //agregar solucion a soluciones
+                soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
+                
+            }else{
+                cantidadFallos+=1;
+            }
+
+        }
+        System.out.println("Cantidad de fallas: "+cantidadFallos);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
+        return soluciones;
     }
+        
+    
+    public ArrayList<String> BacktrackingPrueba2(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>();  //limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();    //limpia soluciones generales
+        contadorFallos = 0;                             //limpia el contador de fallos
+        
+        int cantFichas = (matrix.length * matrix[0].length)/2;
+        int cantidadFallos = 0;
+        int contadorCiclo = 0;
+       
+        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
+        int cantCombinaciones = (int)Math.pow(2, cantFichas);
+        
+        //limipia soluciones anteriores
+        noSoluciones0 = new ArrayList<String>();
+        noSoluciones1 = new ArrayList<String>();
+        
+        //3-Ciclo para recorrer combinaciones
+        for (int i=0; i<cantCombinaciones; i++){
+            dominoes = new ArrayList<Point>();
+
+            //*-Generar matriz gemela de "8"
+            matrixAux = generarmatriz (matrix.length, matrix[0].length);
+            //1-Obtener posible combinacion i
+            String posibleSolucion = Combinaciones.formatoCombinacion (cantFichas, i);
+            //2- llama a esSolucion
+            if (esSolucionBacktracking(posibleSolucion,matrix)){
+                //agregar solucion a algun arreglo
+                soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
+            }else{
+                cantidadFallos+=1;
+            }
+        }
+        System.out.println("Cantidad de fallas: "+cantidadFallos);
+        System.out.println(noSoluciones0);
+        System.out.println(noSoluciones1);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
+        return soluciones;
+    }
+    
 }
     
    

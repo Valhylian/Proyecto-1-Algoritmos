@@ -315,8 +315,9 @@ public class Interfaz extends javax.swing.JFrame {
             imprimirMatriz (matrixInput);
             try {
                 contador = 0;
-                Main.juego.auxiliarBacktracking(matrixInput);
                 Main.juego.auxiliarFuerzaBruta(matrixInput);
+                Main.juego.auxiliarBacktracking(matrixInput);
+                
                 generarMatrizGrafica (matrixInput);
             }
             catch(Exception e) {

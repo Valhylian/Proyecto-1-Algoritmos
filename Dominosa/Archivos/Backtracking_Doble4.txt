@@ -145,5 +145,5 @@ No soluciones (Podas):
 1110111110
 
 
-Tiempo de ejecucion: 468971300
+Tiempo de ejecucion: 224018100
 Cantidad de Fallos: 32762

@@ -84,5 +84,5 @@ No soluciones (Podas):
 101110
 
 
-Tiempo de ejecucion: 2446700
+Tiempo de ejecucion: 11105700
 Cantidad de Fallos: 1016

@@ -8,7 +8,11 @@ Matriz analizada
 2 2 1 1 
 
 Soluciones:
-001010	101000	110000	111100	
+001010
+101000
+110000
+111100
+
 
 Matrices de Soluciones:
 0 0 0 0 
@@ -29,7 +33,15 @@ Matrices de Soluciones:
 
 
 No soluciones (Podas):
-00100	010	01110	100	10101	11001	1110	11111	
+00100
+010
+01110
+100
+10101
+11001
+1110
+11111
 
-Tiempo de ejecucion: 70126800
+
+Tiempo de ejecucion: 1181900
 Cantidad de Fallos: 60
