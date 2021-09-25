@@ -420,5 +420,5 @@ No soluciones (Podas):
 11101111110
 
 
-Tiempo de ejecucion: 21359209700
+Tiempo de ejecucion: 30434768300
 Cantidad de Fallos: 2097134

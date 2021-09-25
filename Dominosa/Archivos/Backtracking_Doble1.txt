@@ -23,5 +23,5 @@ No soluciones (Podas):
 00
 
 
-Tiempo de ejecucion: 2854700
+Tiempo de ejecucion: 2540200
 Cantidad de Fallos: 6

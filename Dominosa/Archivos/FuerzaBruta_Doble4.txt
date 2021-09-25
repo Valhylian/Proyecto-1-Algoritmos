@@ -55,5 +55,5 @@ Matrices de Soluciones:
 1 1 1 1 1 1 
 1 1 0 0 0 0 
 
-Tiempo de ejecucion: 57167100
+Tiempo de ejecucion: 56134000
 Cantidad de Fallos: 32762

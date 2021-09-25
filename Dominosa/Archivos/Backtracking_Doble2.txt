@@ -43,5 +43,5 @@ No soluciones (Podas):
 11111
 
 
-Tiempo de ejecucion: 1181900
+Tiempo de ejecucion: 932300
 Cantidad de Fallos: 60

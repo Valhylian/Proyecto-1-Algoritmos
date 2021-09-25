@@ -158,5 +158,5 @@ Matrices de Soluciones:
 1 1 1 1 1 1 1 
 1 1 1 0 0 1 1 
 
-Tiempo de ejecucion: 2005835100
+Tiempo de ejecucion: 1562930200
 Cantidad de Fallos: 2097134

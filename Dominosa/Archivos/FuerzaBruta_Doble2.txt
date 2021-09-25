@@ -31,5 +31,5 @@ Matrices de Soluciones:
 1 1 1 1 
 0 0 0 0 
 
-Tiempo de ejecucion: 1000500
+Tiempo de ejecucion: 737400
 Cantidad de Fallos: 60

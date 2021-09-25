@@ -454,7 +454,7 @@ public class Dominosa {
     }
 
     
-    ////////////////////////////////////////////////////////////////////////////
+    //FUERZA BRUTA---------------------------------------------------------------------------------
         public ArrayList<String> fuerzaBruta(int matrix[][]){
         solucionesMatrices = new ArrayList<int[][]>();  // limpia la matriz de soluciones
         solucionesGeneral = new ArrayList<String>();    //limpia arreflo de soluciones
@@ -491,6 +491,7 @@ public class Dominosa {
     }
         
     
+    //BACTRACKING-----------------------------------------------------------------------------------
     public ArrayList<String> Backtracking(int matrix[][]){
         solucionesMatrices = new ArrayList<int[][]>();  //limpia la matriz de soluciones
         solucionesGeneral = new ArrayList<String>();    //limpia soluciones generales
@@ -525,8 +526,8 @@ public class Dominosa {
             }
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
-        System.out.println(noSoluciones0);
-        System.out.println(noSoluciones1);
+        //System.out.println(noSoluciones0);
+        //System.out.println(noSoluciones1);
         solucionesGeneral = soluciones;
         contadorFallos = cantidadFallos;
         return soluciones;
