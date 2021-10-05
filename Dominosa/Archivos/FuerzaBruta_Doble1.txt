@@ -18,5 +18,5 @@ Matrices de Soluciones:
 1 1 1 
 1 1 1 
 
-Tiempo de ejecucion: 436000
+Tiempo de ejecucion: 514800
 Cantidad de Fallos: 6

@@ -352,14 +352,7 @@ public class Dominosa {
         if(solucion.startsWith("0")){
             for(int i=0; i<noSoluciones0.size(); i++){
                 contadorLetras=noSoluciones0.get(i).length(); 
-                //System.out.println("S: "+solucion);
-                //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                //System.out.println("NS "+noSoluciones.get(i));
                 if(solucion.substring(0,contadorLetras).equals(noSoluciones0.get(i))){
-                    //System.out.println("Verificador retorna false");
-                    //System.out.println("S: "+solucion);
-                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                    //System.out.println("NS "+noSoluciones.get(i));
                     return false;      
                 }
         
@@ -367,17 +360,9 @@ public class Dominosa {
         }else{
              for(int i=0; i<noSoluciones1.size(); i++){
                 contadorLetras=noSoluciones1.get(i).length(); 
-                //System.out.println("S: "+solucion);
-                //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                //System.out.println("NS "+noSoluciones.get(i));
                 if(solucion.substring(0,contadorLetras).equals(noSoluciones1.get(i))){
-                    //System.out.println("Verificador retorna false");
-                    //System.out.println("S: "+solucion);
-                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                    //System.out.println("NS "+noSoluciones.get(i));
                     return false;  
                 }
-                
             }
         }
         return true;
@@ -459,30 +444,24 @@ public class Dominosa {
         solucionesMatrices = new ArrayList<int[][]>();  // limpia la matriz de soluciones
         solucionesGeneral = new ArrayList<String>();    //limpia arreflo de soluciones
         contadorFallos = 0;                             //limpia el contador de fallos
+        int cantFichas = (matrix.length * matrix[0].length)/2; //calcula la cantidad de fichas
+        int cantidadFallos=0;                           //contador de fallos (para registro)
+        int cantCombinaciones = (int)Math.pow(2, cantFichas);   //cantidad de combinaciones
+        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correcta
         
-        //1-Calcular la cantidad de fichas
-        int cantFichas = (matrix.length * matrix[0].length)/2;
-        int cantidadFallos=0;
-        int cantCombinaciones = (int)Math.pow(2, cantFichas);
-        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-              
-        //3-Ciclo genera combiancion y la valida
+        //Ciclo - genera combinacion y la valida
         for (int i=0; i<cantCombinaciones; i++){
             dominoes = new ArrayList<Point>();
-            //*-Generar matriz gemela de "8"
-            matrixAux = generarmatriz (matrix.length, matrix[0].length);
-            //1-Obtener posible combinacion i
-            String posibleSolucion = Combinaciones.formatoCombinacion (cantFichas, i);
-            //2- llama a esSolucion
+            matrixAux = generarmatriz (matrix.length, matrix[0].length);//Genera matriz gemela de "8"
+            String posibleSolucion = Combinaciones.formatoCombinacion (cantFichas, i); //Obtener posible combinacion i
+            
             if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
                 //agregar solucion a soluciones
                 soluciones.add(posibleSolucion);
                 solucionesMatrices.add(matrixAux);
-                
             }else{
                 cantidadFallos+=1;
             }
-
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
         solucionesGeneral = soluciones;
