@@ -149,7 +149,7 @@ public class Dominosa {
     //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
     public void auxiliarFuerzaBruta(int matrix[][]){
         long startTime = System.nanoTime();
-        fuerzaBrutaPrueba(matrix);// llamamos al método
+        fuerzaBruta(matrix);// llamamos al método
         long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
         generarFormato_FuerzaBruta(matrix,endTime);
     }
@@ -157,7 +157,7 @@ public class Dominosa {
     //LLAMA AL ALGORITMO DE FUERZA BRUTA Y GENERA EL ARCHIVO
     public void auxiliarBacktracking(int matrix[][]){
         long startTime = System.nanoTime();
-        BacktrackingPrueba(matrix);// llamamos al método
+        Backtracking(matrix);// llamamos al método
         long endTime = System.nanoTime() - startTime; // tiempo en que se ejecuta su método
         generarFormato_Backtracking(matrix,endTime);
     }
@@ -241,9 +241,6 @@ public class Dominosa {
         }
         int x = point.x;
         int y = point.y;
-        //System.out.println("Horizontal");
-        //System.out.println("x = "+x );
-        //System.out.println("y = "+y );
         //note que siempre se ubicaria el siguiente a la derecha (porque no habria espacio al otro lado)
         if (y+1 >= matrixAux[0].length){
             //System.out.println("Falso por que se pasa");
@@ -345,52 +342,8 @@ public class Dominosa {
       
             }
         }
-        System.out.println(solucion);
-        System.out.println("Solucion = True");
-        return true;
-    }
-    
-    public ArrayList<String> fuerzaBrutaPrueba(int matrix[][]){
-        solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
-        solucionesGeneral = new ArrayList<String>();
-        contadorFallos = 0; //limpiamos el contador de fallos
-        
-        //1-Calcular la cantidad de fichas
-        int cantFichas = (matrix.length * matrix[0].length)/2;
-        int cantidadFallos=0;
-        //2-Generar lista de posibles soluciones
-        ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
-        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
-              
-        //3-Ciclo para recorrer combinaciones
-        for (int i=0; i<combinaciones.size(); i++){
-            //System.out.println("INICIA LA OTRA SOLUCION");
-            dominoes = new ArrayList<Point>();
-            //*-Generar matriz gemela de "8"
-            matrixAux = generarmatriz (matrix.length, matrix[0].length);
-            //1-Obtener posible combinacion i
-            String posibleSolucion = combinaciones.get(i);
-            //System.out.println(posibleSolucion);
-            //2- llama a esSolucion
-            if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
-                //agregar solucion a soluciones
-                soluciones.add(posibleSolucion);
-                solucionesMatrices.add(matrixAux);
-                
-            }else{
-                cantidadFallos+=1;
-            }
-        }
-        System.out.println("Cantidad de fallas: "+cantidadFallos);
-        solucionesGeneral = soluciones;
-        contadorFallos = cantidadFallos;
-        return soluciones;
-    }
 
-    public void imprimirMatricesSoluciones(){
-        for (int i=0; i<solucionesMatrices.size();i++){
-            imprimirMatriz(solucionesMatrices.get(i));
-        }
+        return true;
     }
 //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -399,14 +352,7 @@ public class Dominosa {
         if(solucion.startsWith("0")){
             for(int i=0; i<noSoluciones0.size(); i++){
                 contadorLetras=noSoluciones0.get(i).length(); 
-                //System.out.println("S: "+solucion);
-                //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                //System.out.println("NS "+noSoluciones.get(i));
                 if(solucion.substring(0,contadorLetras).equals(noSoluciones0.get(i))){
-                    //System.out.println("Verificador retorna false");
-                    //System.out.println("S: "+solucion);
-                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                    //System.out.println("NS "+noSoluciones.get(i));
                     return false;      
                 }
         
@@ -414,17 +360,9 @@ public class Dominosa {
         }else{
              for(int i=0; i<noSoluciones1.size(); i++){
                 contadorLetras=noSoluciones1.get(i).length(); 
-                //System.out.println("S: "+solucion);
-                //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                //System.out.println("NS "+noSoluciones.get(i));
                 if(solucion.substring(0,contadorLetras).equals(noSoluciones1.get(i))){
-                    //System.out.println("Verificador retorna false");
-                    //System.out.println("S: "+solucion);
-                    //System.out.println("SS "+solucion.substring(0,contadorLetras));
-                    //System.out.println("NS "+noSoluciones.get(i));
                     return false;  
                 }
-                
             }
         }
         return true;
@@ -497,34 +435,66 @@ public class Dominosa {
                 return false;
             }
         }
-        //System.out.println(solucion);
-        //System.out.println("Solution = True");
         return true;
     }
 
-    public ArrayList<String> BacktrackingPrueba(int matrix[][]){
-        solucionesMatrices = new ArrayList<int[][]>(); // limpia la matriz de soluciones
-        solucionesGeneral = new ArrayList<String>();
-        contadorFallos = 0; //limpiamos el contador de fallos
+    
+    //FUERZA BRUTA---------------------------------------------------------------------------------
+        public ArrayList<String> fuerzaBruta(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>();  // limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();    //limpia arreflo de soluciones
+        contadorFallos = 0;                             //limpia el contador de fallos
+        int cantFichas = (matrix.length * matrix[0].length)/2; //calcula la cantidad de fichas
+        int cantidadFallos=0;                           //contador de fallos (para registro)
+        int cantCombinaciones = (int)Math.pow(2, cantFichas);   //cantidad de combinaciones
+        ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correcta
         
-        //1-Calcular la cantidad de fichas
+        //Ciclo - genera combinacion y la valida
+        for (int i=0; i<cantCombinaciones; i++){
+            dominoes = new ArrayList<Point>();
+            matrixAux = generarmatriz (matrix.length, matrix[0].length);//Genera matriz gemela de "8"
+            String posibleSolucion = Combinaciones.formatoCombinacion (cantFichas, i); //Obtener posible combinacion i
+            
+            if (esSolucionFuerzaBruta(posibleSolucion,matrix)){
+                //agregar solucion a soluciones
+                soluciones.add(posibleSolucion);
+                solucionesMatrices.add(matrixAux);
+            }else{
+                cantidadFallos+=1;
+            }
+        }
+        System.out.println("Cantidad de fallas: "+cantidadFallos);
+        solucionesGeneral = soluciones;
+        contadorFallos = cantidadFallos;
+        return soluciones;
+    }
+        
+    
+    //BACTRACKING-----------------------------------------------------------------------------------
+    public ArrayList<String> Backtracking(int matrix[][]){
+        solucionesMatrices = new ArrayList<int[][]>();  //limpia la matriz de soluciones
+        solucionesGeneral = new ArrayList<String>();    //limpia soluciones generales
+        contadorFallos = 0;                             //limpia el contador de fallos
+        
         int cantFichas = (matrix.length * matrix[0].length)/2;
-        int cantidadFallos=0;
-        //2-Generar lista de posibles soluciones
-        ArrayList<String> combinaciones = Combinaciones.generarCombinaciones(cantFichas);
+        int cantidadFallos = 0;
+        int contadorCiclo = 0;
+       
         ArrayList<String> soluciones = new ArrayList<String>(); //guarda las soluciones correctas
+        int cantCombinaciones = (int)Math.pow(2, cantFichas);
+        
         //limipia soluciones anteriores
         noSoluciones0 = new ArrayList<String>();
         noSoluciones1 = new ArrayList<String>();
         
         //3-Ciclo para recorrer combinaciones
-        for (int i=0; i<combinaciones.size(); i++){
+        for (int i=0; i<cantCombinaciones; i++){
             dominoes = new ArrayList<Point>();
 
             //*-Generar matriz gemela de "8"
             matrixAux = generarmatriz (matrix.length, matrix[0].length);
             //1-Obtener posible combinacion i
-            String posibleSolucion = combinaciones.get(i);
+            String posibleSolucion = Combinaciones.formatoCombinacion (cantFichas, i);
             //2- llama a esSolucion
             if (esSolucionBacktracking(posibleSolucion,matrix)){
                 //agregar solucion a algun arreglo
@@ -535,12 +505,13 @@ public class Dominosa {
             }
         }
         System.out.println("Cantidad de fallas: "+cantidadFallos);
-        System.out.println(noSoluciones0);
-        System.out.println(noSoluciones1);
+        //System.out.println(noSoluciones0);
+        //System.out.println(noSoluciones1);
         solucionesGeneral = soluciones;
         contadorFallos = cantidadFallos;
         return soluciones;
     }
+    
 }
     
    

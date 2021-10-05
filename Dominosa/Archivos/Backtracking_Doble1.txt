@@ -1,0 +1,27 @@
+Backtracking
+
+Size: 1
+
+Matriz analizada
+1 0 1 
+0 0 1 
+
+Soluciones:
+010
+111
+
+
+Matrices de Soluciones:
+0 0 1 
+0 0 1 
+
+1 1 1 
+1 1 1 
+
+
+No soluciones (Podas):
+00
+
+
+Tiempo de ejecucion: 2847800
+Cantidad de Fallos: 6
